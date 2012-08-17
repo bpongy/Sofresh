@@ -1,5 +1,5 @@
 /*!
- * soFresh v0.2
+ * soFresh v0.3
  * Based on CSSrefresh v1.0.1
  * 
  * Features:
