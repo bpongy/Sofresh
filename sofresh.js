@@ -91,14 +91,9 @@
 	$sf = jQuery.noConflict(true);
 	
 	var date = new Date();
-	var time = date.getTime();
 	
 	// CSS
-	var csssf  = document.createElement('link');
-		csssf.rel  = 'stylesheet';
-		csssf.type = 'text/css';
-		csssf.href = "http://sofresh.redpik.net/s/latest/sofresh.css?"+time;
-		document.getElementsByTagName('head')[0].appendChild(csssf);
+	$sf('head').append('<link rel="stylesheet" type="text/css" href="http://sofresh.redpik.net/s/latest/sofresh.css?' + date.getTime() + '" />');
 	
 	var sofreshHTML = 
 		'<div id="sofresh" class="expanded" style="display:none">'+ 
@@ -118,7 +113,7 @@
 					'</div>'+
 				'</div>'+
 				'<div id="sofresh_footer">'+
-					'<a href="http://code.google.com/p/sofresh/">soFresh!</a> by <a href="http://nicolas.sorosac.fr/">Nicolas</a> &amp; <a href="http://www.redpik.net">Ben</a>'+
+					'<a href="http://sofresh.redpik.net/">soFresh!</a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 				'</div>'+
 			'</div>'+
 		'</div>';
