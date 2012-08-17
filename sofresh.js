@@ -29,6 +29,7 @@
  * TODO Refresh a file when checked
  * TODO List distant files (don't hide them, just use a different class)
  * TODO Add a custom CSS input text at the bottom of the widget
+ * 
   */
 (function(){
 	
