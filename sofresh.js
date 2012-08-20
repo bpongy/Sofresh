@@ -1,6 +1,12 @@
 <?php
 header('Content-Type: text/javascript; charset=UTF-8');
 $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
+# Minified CSS
+$css = file_get_contents(dirname(__FILE__).'/css/sofresh.css');
+$css = str_replace("\n", ' ', $css);
+$css = str_replace("\t", ' ', $css);
+$count = 1;
+while ($count) $css = str_replace('  ', ' ', $css, $count);
 ?>
 /*!
  * soFresh v0.2
@@ -43,7 +49,7 @@ $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
 	$sf = jQuery.noConflict(true);
 	
 	// CSS
-	$sf('head').append('<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl; ?>/css/sofresh.css" />');
+	$sf('head').append('<style type="text/css"><?php echo $css; ?></style>');
 	
 	var sofreshHTML = 
 		'<div id="sofresh" class="expanded" style="display:none">'+ 
@@ -120,7 +126,6 @@ $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
 			var bootstrapRegexp = /bootstrap(-responsive)?(\.min)?\.css/i;
 			return !(
 				(href.indexOf('//') > -1 && href.indexOf('//') <= 6 && href.indexOf('//'+location.hostname+'/') == -1) ||
-				href.indexOf('<?php echo $baseUrl; ?>') > -1 ||
 				href.indexOf('chrome-extension://') > -1 ||
 				href.indexOf('data:text/css') > -1 ||
 				bootstrapRegexp.test(href)
