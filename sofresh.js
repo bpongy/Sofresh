@@ -98,7 +98,7 @@ $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
 						if (this.initialized){
 							elem = $sf('#sofresh_links label[for="sofresh_link_' + $sf(link.elem).data('sofresh-link') + '"]').parents('li');
 							elem.addClass('sofresh-highlight');
-							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 500);
+							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 1100);
 						}
 					}
 				}
