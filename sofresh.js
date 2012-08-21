@@ -9,7 +9,7 @@ $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
 ?>
 /*!
- * soFresh v0.2
+ * soFresh v1.2
  * Based on CSSrefresh v1.0.1
  * 
  * Features:
