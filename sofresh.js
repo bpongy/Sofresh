@@ -1,4 +1,5 @@
 <?php
+define('SOFRESH_VERSION', '1.2');
 header('Content-Type: text/javascript; charset=UTF-8');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime(__FILE__)) . ' GMT');
 $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
@@ -8,7 +9,6 @@ $css = str_replace("\n", ' ', $css);
 $css = str_replace("\t", ' ', $css);
 $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
-
 function get_inline_image($src) {
 	echo base64_encode(file_get_contents(dirname(__FILE__).'/img/'.$src));
 }
@@ -23,7 +23,7 @@ function get_inline_image($src) {
  * |_|  \___|\__,_| .__/|_|_|\_(_)_| |_|\___|\__)
  *                |_|                            
  * 
- * soFresh v1.2
+ * soFresh v<?php echo SOFRESH_VERSION; ?>
  * Based on CSSrefresh v1.0.1
  * 
  * Features:
@@ -84,7 +84,7 @@ function get_inline_image($src) {
 					'</div>'+
 				'</div>'+
 				'<div id="sofresh_footer">'+
-					'<a href="http://sofresh.redpik.net/">soFresh!</a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
+					'<a href="http://sofresh.redpik.net/">soFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 				'</div>'+
 			'</div>'+
 		'</div>';
