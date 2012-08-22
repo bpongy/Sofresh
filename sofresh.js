@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: text/javascript; charset=UTF-8');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime(__FILE__)) . ' GMT');
 $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
 # Minified CSS
 $css = file_get_contents(dirname(__FILE__).'/css/sofresh.css');
