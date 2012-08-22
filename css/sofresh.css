@@ -13,9 +13,11 @@
 	        user-select: none;
 }
 
-#sofresh img {
+#sofresh .icon {
 	display: inline-block;
 	vertical-align: text-top;
+	width: 12px;
+	height: 12px;
 }
 
 #sofresh {
@@ -158,7 +160,12 @@
 #sofresh ul#sofresh_links li label { display: block; float: left; width: 85%; height: 18px; line-height: 17px; font-size: 11px; overflow: hidden; white-space: nowrap; text-align: left; text-overflow: ellipsis; }
 #sofresh ul#sofresh_links li.sofresh-active label { color: #000; }
 #sofresh ul#sofresh_links li.sofresh-inactive label { color: #999; }
-#sofresh ul#sofresh_links li input { float: left; margin: 3px 5px 0 0; position: relative; -webkit-appearance: checkbox; }
+#sofresh ul#sofresh_links li .icon { margin: 0 4px 0 0; }
+#sofresh ul#sofresh_links li.sofresh-active .icon-checkbox-checked { display: inline-block; }
+#sofresh ul#sofresh_links li.sofresh-inactive .icon-checkbox-checked { display: none; }
+#sofresh ul#sofresh_links li.sofresh-active .icon-checkbox-unchecked { display: none; }
+#sofresh ul#sofresh_links li.sofresh-inactive .icon-checkbox-unchecked { display: inline-block; }
+#sofresh ul#sofresh_links li input { position: absolute; top: -50000px; }
 #sofresh.hideInactive ul#sofresh_links li.sofresh-inactive { display: none; }
 
 #sofresh .arrow {

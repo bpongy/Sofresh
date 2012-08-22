@@ -1,8 +1,13 @@
 <?php
+
 define('SOFRESH_VERSION', '1.2');
-header('Content-Type: text/javascript; charset=UTF-8');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime(__FILE__)) . ' GMT');
+define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', getlastmod()) . ' GMT');
+
 $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
+
+header('Content-Type: text/javascript; charset=UTF-8');
+header('Last-Modified: '.SOFRESH_LAST_MODIFIED);
+
 # Minified CSS
 $css = file_get_contents(dirname(__FILE__).'/css/sofresh.css');
 $css = str_replace("\n", ' ', $css);
@@ -10,7 +15,7 @@ $css = str_replace("\t", ' ', $css);
 $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
 function get_inline_image($src) {
-	echo base64_encode(file_get_contents(dirname(__FILE__).'/img/'.$src));
+	echo 'data:image/png;base64,'.base64_encode(file_get_contents(dirname(__FILE__).'/img/'.$src));
 }
 
 ?>
@@ -23,12 +28,9 @@ function get_inline_image($src) {
  * |_|  \___|\__,_| .__/|_|_|\_(_)_| |_|\___|\__)
  *                |_|                            
  * 
- * soFresh v<?php echo SOFRESH_VERSION; ?>
- * Based on CSSrefresh v1.0.1
- * 
- * Features:
- *  - Refresh only local CSS files
- *  - Advanced bookmarklet with UI
+ * soFresh!
+ * Version: <?php echo SOFRESH_VERSION."\n"; ?>
+ * Last-Modified: <?php echo SOFRESH_LAST_MODIFIED."\n"; ?>
  * 
  * jQuery:
  *  - Copyright (c) jquery.com
@@ -66,42 +68,13 @@ function get_inline_image($src) {
 	
 	$sf = jQuery.noConflict(true);
 	
-	// CSS
-	$sf('head').append('<style type="text/css"><?php echo $css; ?></style>');
-	
-	var sofreshHTML = 
-		'<div id="sofresh" class="expanded" style="display:none">'+ 
-			'<div>'+
-				'<div id="sofresh_header">'+
-					'<span id="sofresh_check"></span>'+
-					'<span id="sofresh_title"><i></i>soFresh!</span>'+
-					'<span id="sofresh_content_toggler" class="arrow inverted">→</span>'+
-				'</div>'+
-				'<div id="sofresh_content">'+
-					'<div id="sofresh_content_actions">'+
-						'<a href="#" id="sofresh_content_actions_toggler"><img src="data:image/png;base64,<?php get_inline_image("cog_icon&16.png"); ?>" width="12" height="12" /> Actions...</a>'+
-						'<ul id="sofresh_content_actions_list">'+
-							'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
-							'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+
-							'<li><a href="#" id="sofresh_hide_inactive"><span class="show">Show deactivated files</span><span class="hide">Hide deactivated files</span></a></li>'+
-						'</ul>'+
-					'</div>'+
-				'</div>'+
-				'<div id="sofresh_footer">'+
-					'<a href="http://sofresh.redpik.net/">soFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
-				'</div>'+
-			'</div>'+
-		'</div>';
-	
-	$sf(document.body).append(sofreshHTML);
-	
 	/**
 	 * soFresh
 	 */
 	window.soFresh = function(){
 
 		this.initialized = false;
-		this.container = $sf('#sofresh');
+		this.container = null;
 		this.reloadTimeout = null;
 		this.reloadDelay = 1000;
 		this.links = [];
@@ -205,44 +178,21 @@ function get_inline_image($src) {
 			return null;
 		};
 		
-		this.initDragAndDrop = function() {
-			var self = this,
-				initX = false,
-				initY = false;
-			$sf(document).bind('mousemove', function(event){
-				if (self.container.hasClass('movable')) {
-					event.preventDefault();
-					if (!initX) initX = event.pageX;
-					if (!initY) initY = event.pageY;
-					var thisX = event.pageX - initX;
-					var thisY = event.pageY - initY;
-					initX = event.pageX;
-					initY = event.pageY;
-					$sf('.movable').css({ left: '+=' + thisX, top: '+=' + thisY });
-				}
-			});
-			$sf('#sofresh_header').bind('mousedown', function(event){
-				event.preventDefault();
-				self.container.addClass('movable');
-			}).bind('mouseup', function(){
-				self.container.removeClass('movable');
-				initX = false;
-				initY = false;
-				var position = self.container.position();
-				self.position = {
-					top:  position.top  - $sf(document).scrollTop(),
-					left: position.left - $sf(document).scrollLeft()
-				};
-				self.saveState();
-			});
-		};
-		
 		this.toggleContent = function(){
 			$sf('#sofresh_content').slideToggle(250, 'linear');
 			this.container.toggleClass('expanded');
 			this.container.toggleClass('collapsed');
 			this.expanded = this.container.hasClass('expanded');
 			this.saveState();
+			return false;
+		};
+
+		this.toggleActionsList = function(){
+			if ($sf('#sofresh_content_actions_list').hasClass('active')) {
+				this.hideActionsList();
+			} else {
+				this.showActionsList();
+			}
 			return false;
 		};
 
@@ -323,6 +273,38 @@ function get_inline_image($src) {
 			this.container.css({ top: this.position.top, left: this.position.left });
 		};
 
+		this.initDragAndDrop = function() {
+			var $this = this,
+				initX = false,
+				initY = false;
+			$sf(document).bind('mousemove', function(event){
+				if ($this.container.hasClass('movable')) {
+					event.preventDefault();
+					if (!initX) initX = event.pageX;
+					if (!initY) initY = event.pageY;
+					var thisX = event.pageX - initX;
+					var thisY = event.pageY - initY;
+					initX = event.pageX;
+					initY = event.pageY;
+					$sf('.movable').css({ left: '+=' + thisX, top: '+=' + thisY });
+				}
+			});
+			$sf('#sofresh_header').bind('mousedown', function(event){
+				event.preventDefault();
+				$this.container.addClass('movable');
+			}).bind('mouseup', function(){
+				$this.container.removeClass('movable');
+				initX = false;
+				initY = false;
+				var position = $this.container.position();
+				$this.position = {
+					top:  position.top  - $sf(document).scrollTop(),
+					left: position.left - $sf(document).scrollLeft()
+				};
+				$this.saveState();
+			});
+		};
+
 		// List CSS files and create the HTML list
 		this.initFilesList = function(){
 			
@@ -357,13 +339,15 @@ function get_inline_image($src) {
 						html += '<li title="' + href + '" class="' + liClass + '">';
 							html += '<label for="sofresh_link_' + i + '">';
 								html += '<input type="checkbox" name="sofresh_links_filters[]" id="sofresh_link_' + i + '" ' + checked + ' /> ';
+								html += '<img src="<?php get_inline_image("checkbox_checked_icon&16.png"); ?>" class="icon icon-checkbox-checked" />';
+								html += '<img src="<?php get_inline_image("checkbox_unchecked_icon&16.png"); ?>" class="icon icon-checkbox-unchecked" />';
 								html += filename; 
 							html += '</label>';
 							html += '<a href="' + href + '" title="' + href + '" target="_blank" class="arrow">&rarr;</a>';
 						html += '</li>';
 						i++;
 					} else {
-						console.warn("[SoFresh] A non-local CSS file will not be resfreshed: " + href);
+						if (console) console.warn("[SoFresh] A non-local CSS file will not be resfreshed: " + href);
 					}
 				}
 			}
@@ -393,13 +377,45 @@ function get_inline_image($src) {
 			}).trigger('change');
 			// UI events
 			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
-			$sf('#sofresh_content_actions_toggler').on('click', this.showActionsList);
+			$sf('#sofresh_content_actions_toggler').on('click', function(){ return $this.toggleActionsList() });
 			$sf('#sofresh_content_actions').on('mouseleave', this.hideActionsList);
 			$sf('#sofresh_check_all').on('click', { links: this.links }, this.checkAll);
 			$sf('#sofresh_uncheck_all').on('click', { links: this.links }, this.uncheckAll);
 			$sf('#sofresh_hide_inactive').on('click', function(){ return $this.hideInactiveLinks(); });
 		};
+		
+		this.initHTML = function(){
+			// CSS
+			$sf('head').append('<style type="text/css"><?php echo $css; ?></style>');
+			// HTML
+			$sf(document.body).append(
+				'<div id="sofresh" class="expanded" style="display:none">'+ 
+					'<div>'+
+						'<div id="sofresh_header">'+
+							'<span id="sofresh_check"></span>'+
+							'<span id="sofresh_title"><i></i>soFresh!</span>'+
+							'<span id="sofresh_content_toggler" class="arrow inverted">→</span>'+
+						'</div>'+
+						'<div id="sofresh_content">'+
+							'<div id="sofresh_content_actions">'+
+								'<a href="#" id="sofresh_content_actions_toggler"><img src="<?php get_inline_image("cog_icon&16.png"); ?>" class="icon icon-cog" /> Actions...</a>'+
+								'<ul id="sofresh_content_actions_list">'+
+									'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
+									'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+
+									'<li><a href="#" id="sofresh_hide_inactive"><span class="show">Show deactivated files</span><span class="hide">Hide deactivated files</span></a></li>'+
+								'</ul>'+
+							'</div>'+
+						'</div>'+
+						'<div id="sofresh_footer">'+
+							'<a href="http://sofresh.redpik.net/">soFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
+						'</div>'+
+					'</div>'+
+				'</div>'
+			);
+			this.container = $sf('#sofresh');
+		};
 
+		this.initHTML();
 		this.initState();
 		this.initFilesList();
 		this.initEvents();
