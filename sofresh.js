@@ -41,7 +41,11 @@ function get_inline_image($src) {
  * CSSrefresh:
  *  - Copyright (c) 2012 Fred Heusschen
  *  - http://www.frebsite.nl/
- *  
+ * 
+ * Icon set:
+ *  - The Creative Commons Attribution-NonCommercial
+ *  - http://gentleface.com/
+ * 
  * soFresh:
  *  - Copyright (c) 2012 Benjamin Pongy & Nicolas Sorosac & Sylvain Gougouzian
  *  - http://www.axome.com/
@@ -75,7 +79,7 @@ function get_inline_image($src) {
 				'</div>'+
 				'<div id="sofresh_content">'+
 					'<div id="sofresh_content_actions">'+
-						'<a href="#" id="sofresh_content_actions_toggler"><img src="data:image/png;base64,<?php get_inline_image("preferences.png"); ?>" width="12" height="12" /> Actions...</a>'+
+						'<a href="#" id="sofresh_content_actions_toggler"><img src="data:image/png;base64,<?php get_inline_image("cog_icon&16.png"); ?>" width="12" height="12" /> Actions...</a>'+
 						'<ul id="sofresh_content_actions_list">'+
 							'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
 							'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+
