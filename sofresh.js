@@ -7,6 +7,11 @@ $css = str_replace("\n", ' ', $css);
 $css = str_replace("\t", ' ', $css);
 $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
+
+function get_inline_image($src) {
+	echo base64_encode(file_get_contents(dirname(__FILE__).'/img/'.$src));
+}
+
 ?>
 /*!
  *               _       _ _
@@ -69,11 +74,12 @@ while ($count) $css = str_replace('  ', ' ', $css, $count);
 				'</div>'+
 				'<div id="sofresh_content">'+
 					'<div id="sofresh_content_actions">'+
-						'<a href="#" id="sofresh_check_all"><strong>☑</strong> all</a>'+
-						' | '+
-						'<a href="#" id="sofresh_uncheck_all"><strong>☒</strong> all</a>'+
-						' | '+
-						'<a href="#" id="sofresh_hide_inactive"><span class="show">show</span><span class="hide">hide</span> <strong>☒</strong></a>'+
+						'<a href="#" id="sofresh_content_actions_toggler"><img src="data:image/png;base64,<?php get_inline_image("preferences.png"); ?>" width="12" height="12" /> Actions...</a>'+
+						'<ul id="sofresh_content_actions_list">'+
+							'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
+							'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+
+							'<li><a href="#" id="sofresh_hide_inactive"><span class="show">Show deactivated files</span><span class="hide">Hide deactivated files</span></a></li>'+
+						'</ul>'+
 					'</div>'+
 				'</div>'+
 				'<div id="sofresh_footer">'+
@@ -232,18 +238,31 @@ while ($count) $css = str_replace('  ', ' ', $css, $count);
 			this.container.toggleClass('collapsed');
 			this.expanded = this.container.hasClass('expanded');
 			this.saveState();
+			return false;
+		};
+
+		this.showActionsList = function(){
+			$sf('#sofresh_content_actions_list').addClass('active');
+			return false;
+		};
+
+		this.hideActionsList = function(){
+			$sf('#sofresh_content_actions_list').removeClass('active');
+			return false;
 		};
 
 		this.checkAll = function(){
 			$sf('#sofresh_links input:checkbox').attr('checked', 'checked').first().trigger('change');
+			$sf('#sofresh_content_actions_list').removeClass('active');
 			return false;
 		};
 
 		this.uncheckAll = function(){
 			$sf('#sofresh_links input:checkbox').removeAttr('checked').first().trigger('change');
+			$sf('#sofresh_content_actions_list').removeClass('active');
 			return false;
 		};
-		
+
 		this.hideInactiveLinks = function(){
 			if (this.hideInactive) {
 				this.hideInactive = false;
@@ -252,6 +271,7 @@ while ($count) $css = str_replace('  ', ' ', $css, $count);
 				this.hideInactive = true;
 				this.container.addClass('hideInactive');
 			}
+			$sf('#sofresh_content_actions_list').removeClass('active');
 			return false;
 		};
 
@@ -367,12 +387,14 @@ while ($count) $css = str_replace('  ', ' ', $css, $count);
 				$this.reloadFile(checked_links);
 			}).trigger('change');
 			// UI events
-			$sf('#sofresh_content_toggler').on('click', function(){ $this.toggleContent() });
+			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
+			$sf('#sofresh_content_actions_toggler').on('click', this.showActionsList);
+			$sf('#sofresh_content_actions').on('mouseleave', this.hideActionsList);
 			$sf('#sofresh_check_all').on('click', { links: this.links }, this.checkAll);
 			$sf('#sofresh_uncheck_all').on('click', { links: this.links }, this.uncheckAll);
-			$sf('#sofresh_hide_inactive').on('click', function(){ $this.hideInactiveLinks() });
+			$sf('#sofresh_hide_inactive').on('click', function(){ return $this.hideInactiveLinks(); });
 		};
-		
+
 		this.initState();
 		this.initFilesList();
 		this.initEvents();
