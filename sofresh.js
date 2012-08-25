@@ -75,22 +75,22 @@ function get_inline_image($src) {
 
 		this.initialized = false;
 		this.container = null;
-		this.reloadTimeout = null;
-		this.reloadDelay = 1000;
+		this.reload_timeout = null;
+		this.reload_delay = 1000;
 		this.links = [];
 		this.active_files = [];
 		this.expanded = true;
-		this.hideInactive = false;
+		this.hide_inactive = false;
 		this.position = { left: 0, top: 0 };
 
 		this.reloadFile = function(links) {
-			clearTimeout(this.reloadTimeout);
+			clearTimeout(this.reload_timeout);
 			for (var a = 0, l = links.length; a < l; a++) {
-				var link = links[a], newTime = phpjs.filemtime(this.getRandom(link.href));
+				var link = links[a], new_time = phpjs.filemtime(this.getRandom(link.href));
 				// has been checked before or first try
 				if (link.last || !this.initialized) {
 					// has been changed or first try
-					if (link.last != newTime || !this.initialized) {
+					if (link.last != new_time || !this.initialized) {
 						// reload
 						link.elem.setAttribute('href', this.getRandom(this.getHref(link.elem)));
 						if (this.initialized){
@@ -101,12 +101,12 @@ function get_inline_image($src) {
 					}
 				}
 				// set last time checked
-				link.last = newTime;
+				link.last = new_time;
 			}
 			if (!this.initialized) this.initialized = true;
-			this.reloadTimeout = setTimeout(function(){
+			this.reload_timeout = setTimeout(function(){
 				this.reloadFile(links);
-			}, this.reloadDelay);
+			}, this.reload_delay);
 		};
 
 		this.getHref = function(f){
@@ -115,12 +115,12 @@ function get_inline_image($src) {
 
 		this.isLocalHref = function(href){
 			if (href == null) return false;
-			var bootstrapRegexp = /bootstrap(-responsive)?(\.min)?\.css/i;
+			var bootstrap_regexp = /bootstrap(-responsive)?(\.min)?\.css/i;
 			return !(
 				(href.indexOf('//') > -1 && href.indexOf('//') <= 6 && href.indexOf('//'+location.hostname+'/') == -1) ||
 				href.indexOf('chrome-extension://') > -1 ||
 				href.indexOf('data:text/css') > -1 ||
-				bootstrapRegexp.test(href)
+				bootstrap_regexp.test(href)
 			);
 		};
 
@@ -180,15 +180,15 @@ function get_inline_image($src) {
 		
 		this.toggleContent = function(){
 			$sf('#sofresh_content').slideToggle(250, 'linear');
-			this.container.toggleClass('expanded');
-			this.container.toggleClass('collapsed');
-			this.expanded = this.container.hasClass('expanded');
+			this.container.toggleClass('sofresh-expanded');
+			this.container.toggleClass('sofresh-collapsed');
+			this.expanded = this.container.hasClass('sofresh-expanded');
 			this.saveState();
 			return false;
 		};
 
 		this.toggleActionsList = function(){
-			if ($sf('#sofresh_content_actions_list').hasClass('active')) {
+			if ($sf('#sofresh_content_actions_list').hasClass('sofresh-active')) {
 				this.hideActionsList();
 			} else {
 				this.showActionsList();
@@ -197,36 +197,36 @@ function get_inline_image($src) {
 		};
 
 		this.showActionsList = function(){
-			$sf('#sofresh_content_actions_list').addClass('active');
+			$sf('#sofresh_content_actions_list').addClass('sofresh-active');
 			return false;
 		};
 
 		this.hideActionsList = function(){
-			$sf('#sofresh_content_actions_list').removeClass('active');
+			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
 			return false;
 		};
 
 		this.checkAll = function(){
 			$sf('#sofresh_links input:checkbox').attr('checked', 'checked').first().trigger('change');
-			$sf('#sofresh_content_actions_list').removeClass('active');
+			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
 			return false;
 		};
 
 		this.uncheckAll = function(){
 			$sf('#sofresh_links input:checkbox').removeAttr('checked').first().trigger('change');
-			$sf('#sofresh_content_actions_list').removeClass('active');
+			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
 			return false;
 		};
 
 		this.hideInactiveLinks = function(){
-			if (this.hideInactive) {
-				this.hideInactive = false;
-				this.container.removeClass('hideInactive');
+			if (this.hide_inactive) {
+				this.hide_inactive = false;
+				this.container.removeClass('sofresh-hide-inactive');
 			} else {
-				this.hideInactive = true;
-				this.container.addClass('hideInactive');
+				this.hide_inactive = true;
+				this.container.addClass('sofresh-hide-inactive');
 			}
-			$sf('#sofresh_content_actions_list').removeClass('active');
+			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
 			return false;
 		};
 
@@ -238,10 +238,10 @@ function get_inline_image($src) {
 				});
 				this.active_files = selected_files;
 				var sofresh_state = {
-					'active_files' : this.active_files.join(','),
-					'expanded'     : this.expanded,
-					'hideInactive' : this.hideInactive,
-					'position'     : this.position
+					'active_files'  : this.active_files.join(','),
+					'expanded'      : this.expanded,
+					'hide_inactive' : this.hide_inactive,
+					'position'      : this.position
 				};
 				var date_exp = new Date();
 				date_exp.setTime(date_exp.getTime()+(365*24*3600*1000));
@@ -256,19 +256,19 @@ function get_inline_image($src) {
 			if (navigator.cookieEnabled) {
 				var sofresh_state_cookie = this.getCookie('sofresh_state');
 				if (sofresh_state_cookie !== null) {
-					var sofresh_state = JSON.parse(sofresh_state_cookie);
-					this.active_files = sofresh_state.active_files.split(',');
-					this.expanded     = sofresh_state.expanded;
-					this.hideInactive = sofresh_state.hideInactive;
-					this.position     = sofresh_state.position;
+					var sofresh_state  = JSON.parse(sofresh_state_cookie);
+					this.active_files  = sofresh_state.active_files.split(',');
+					this.expanded      = sofresh_state.expanded;
+					this.hide_inactive = sofresh_state.hide_inactive;
+					this.position      = sofresh_state.position;
 				}
 			}
 			if (this.expanded === false) {
-				this.container.removeClass('expanded').addClass('collapsed');
+				this.container.removeClass('sofresh-expanded').addClass('sofresh-collapsed');
 				$sf('#sofresh_content').hide();
 			}
-			if (this.hideInactive) {
-				this.container.addClass('hideInactive');
+			if (this.hide_inactive) {
+				this.container.addClass('hide_inactive');
 			}
 			this.container.css({ top: this.position.top, left: this.position.left });
 		};
@@ -278,7 +278,7 @@ function get_inline_image($src) {
 				initX = false,
 				initY = false;
 			$sf(document).bind('mousemove', function(event){
-				if ($this.container.hasClass('movable')) {
+				if ($this.container.hasClass('sofresh-movable')) {
 					event.preventDefault();
 					if (!initX) initX = event.pageX;
 					if (!initY) initY = event.pageY;
@@ -286,14 +286,14 @@ function get_inline_image($src) {
 					var thisY = event.pageY - initY;
 					initX = event.pageX;
 					initY = event.pageY;
-					$sf('.movable').css({ left: '+=' + thisX, top: '+=' + thisY });
+					$sf('.sofresh-movable').css({ left: '+=' + thisX, top: '+=' + thisY });
 				}
 			});
 			$sf('#sofresh_header').bind('mousedown', function(event){
 				event.preventDefault();
-				$this.container.addClass('movable');
+				$this.container.addClass('sofresh-movable');
 			}).bind('mouseup', function(){
-				$this.container.removeClass('movable');
+				$this.container.removeClass('sofresh-movable');
 				initX = false;
 				initY = false;
 				var position = $this.container.position();
@@ -314,7 +314,7 @@ function get_inline_image($src) {
 				i = 0;
 			
 			for (var a = 0, l = files.length; a < l; a++) {
-				var elem = files[a], rel = elem.rel, filename = '', checked = '', liClass = '';
+				var elem = files[a], rel = elem.rel, filename = '', checked = '', li_class = '';
 				if (typeof rel != 'string' || rel.length == 0 || rel == 'stylesheet') {
 					var href = this.getHref(elem);
 					if (href != null && this.isLocalHref(href)) {
@@ -327,16 +327,16 @@ function get_inline_image($src) {
 						filename = href.split('/').pop();
 						if (this.active_files !== null) {
 							if ($sf.inArray(href, this.active_files) != -1) {
-								checked = 'checked="checked"';
-								liClass = 'sofresh-active';
+								checked  = 'checked="checked"';
+								li_class = 'sofresh-active';
 							} else {
-								checked = '';
-								liClass = 'sofresh-inactive';
+								checked  = '';
+								li_class = 'sofresh-inactive';
 							}
 						} else {
 							checked = 'checked="checked"';
 						}
-						html += '<li title="' + href + '" class="' + liClass + '">';
+						html += '<li title="' + href + '" class="' + li_class + '">';
 							html += '<label for="sofresh_link_' + i + '">';
 								html += '<input type="checkbox" name="sofresh_links_filters[]" id="sofresh_link_' + i + '" ' + checked + ' /> ';
 								html += '<img src="<?php get_inline_image("checkbox_checked_icon&16.png"); ?>" class="icon icon-checkbox-checked" />';
@@ -389,7 +389,7 @@ function get_inline_image($src) {
 			$sf('head').append('<style type="text/css"><?php echo $css; ?></style>');
 			// HTML
 			$sf(document.body).append(
-				'<div id="sofresh" class="expanded" style="display:none">'+ 
+				'<div id="sofresh" class="sofresh-expanded" style="display:none">'+ 
 					'<div>'+
 						'<div id="sofresh_header">'+
 							'<span id="sofresh_check"></span>'+
@@ -402,7 +402,7 @@ function get_inline_image($src) {
 								'<ul id="sofresh_content_actions_list">'+
 									'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
 									'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+
-									'<li><a href="#" id="sofresh_hide_inactive"><span class="show">Show deactivated files</span><span class="hide">Hide deactivated files</span></a></li>'+
+									'<li><a href="#" id="sofresh_hide_inactive"><span class="sofresh-show">Show deactivated files</span><span class="sofresh-hide">Hide deactivated files</span></a></li>'+
 								'</ul>'+
 							'</div>'+
 						'</div>'+
