@@ -65,7 +65,28 @@ function get_inline_image($src) {
 
 	<?php include_once dirname(__FILE__).'/js/php.js'; ?>
 	
-	$sf = jQuery.noConflict(true);
+	// if we call the bookmarlet several times: clean everything!
+	if (typeof $sf == 'undefined') $sf = jQuery.noConflict(true);
+	if (typeof window.soFresh == 'function') {
+		// timeout
+		clearTimeout(window.soFresh.reload_timeout);
+		// object
+		window.soFresh = null;
+		// events
+		$sf(document).off('mousemove');
+		$sf('#sofresh_header').off('mousedown');
+		$sf('#sofresh_header').off('mouseup');
+		$sf('#sofresh_links input:checkbox').off('change');
+		$sf('#sofresh_content_toggler').off('click');
+		$sf('#sofresh_content_actions_toggler').off('click');
+		$sf('#sofresh_content_actions').off('mouseleave');
+		$sf('#sofresh_check_all').off('click');
+		$sf('#sofresh_uncheck_all').off('click');
+		$sf('#sofresh_hide_inactive').off('click');
+		// elements
+		$sf('#sofresh').remove();
+		$sf('#sofresh-style').remove();
+	};
 	
 	/**
 	 * soFresh
@@ -277,7 +298,7 @@ function get_inline_image($src) {
 			var $this = this,
 				initX = false,
 				initY = false;
-			$sf(document).bind('mousemove', function(event){
+			$sf(document).on('mousemove', function(event){
 				if ($this.container.hasClass('sofresh-movable')) {
 					event.preventDefault();
 					if (!initX) initX = event.pageX;
@@ -289,10 +310,10 @@ function get_inline_image($src) {
 					$sf('.sofresh-movable').css({ left: '+=' + thisX, top: '+=' + thisY });
 				}
 			});
-			$sf('#sofresh_header').bind('mousedown', function(event){
+			$sf('#sofresh_header').on('mousedown', function(event){
 				event.preventDefault();
 				$this.container.addClass('sofresh-movable');
-			}).bind('mouseup', function(){
+			}).on('mouseup', function(){
 				$this.container.removeClass('sofresh-movable');
 				initX = false;
 				initY = false;
@@ -387,7 +408,7 @@ function get_inline_image($src) {
 		
 		this.initHTML = function(){
 			// CSS
-			$sf('head').append('<style type="text/css"><?php echo $css; ?></style>');
+			$sf('head').append('<style type="text/css" id="sofresh-style"><?php echo $css; ?></style>');
 			// HTML
 			$sf(document.body).append(
 				'<div id="sofresh" class="sofresh-expanded" style="display:none">'+ 
@@ -423,6 +444,6 @@ function get_inline_image($src) {
 		this.initDragAndDrop();
 	};
 
-	window.soFresh();
+	window.soFreshIntance = window.soFresh();
 
 })();
