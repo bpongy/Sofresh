@@ -339,8 +339,8 @@ function get_inline_image($src) {
 						html += '<li title="' + href + '" class="' + li_class + '">';
 							html += '<label for="sofresh_link_' + i + '">';
 								html += '<input type="checkbox" name="sofresh_links_filters[]" id="sofresh_link_' + i + '" ' + checked + ' /> ';
-								html += '<img src="<?php get_inline_image("checkbox_checked_icon&16.png"); ?>" class="icon icon-checkbox-checked" />';
-								html += '<img src="<?php get_inline_image("checkbox_unchecked_icon&16.png"); ?>" class="icon icon-checkbox-unchecked" />';
+								html += '<img src="<?php get_inline_image("checkbox_checked_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-checked" />';
+								html += '<img src="<?php get_inline_image("checkbox_unchecked_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-unchecked" />';
 								html += filename; 
 							html += '</label>';
 							html += '<a href="' + href + '" title="' + href + '" target="_blank" class="arrow">&rarr;</a>';
@@ -399,7 +399,7 @@ function get_inline_image($src) {
 						'</div>'+
 						'<div id="sofresh_content">'+
 							'<div id="sofresh_content_actions">'+
-								'<a href="#" id="sofresh_content_actions_toggler"><img src="<?php get_inline_image("cog_icon&16.png"); ?>" class="icon icon-cog" /> Actions...</a>'+
+								'<a href="#" id="sofresh_content_actions_toggler"><img src="<?php get_inline_image("cog_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-cog" /> Actions...</a>'+
 								'<ul id="sofresh_content_actions_list">'+
 									'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
 									'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+

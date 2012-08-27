@@ -13,7 +13,7 @@
 	        user-select: none;
 }
 
-#sofresh .icon {
+#sofresh .sofresh-icon {
 	display: inline-block;
 	vertical-align: text-top;
 	width: 12px;
@@ -159,11 +159,11 @@
 #sofresh ul#sofresh_links li.sofresh-highlight { background-color: #fe9; }
 #sofresh ul#sofresh_links li label { display: block; float: left; width: 85%; height: 18px; line-height: 17px; font-size: 11px; overflow: hidden; white-space: nowrap; text-align: left; text-overflow: ellipsis; color: #000; }
 #sofresh ul#sofresh_links li.sofresh-inactive { filter: alpha(opacity=50); opacity: 0.5; }
-#sofresh ul#sofresh_links li .icon { margin: 0 4px 0 0; }
-#sofresh ul#sofresh_links li.sofresh-active .icon-checkbox-checked { display: inline-block; }
-#sofresh ul#sofresh_links li.sofresh-inactive .icon-checkbox-checked { display: none; }
-#sofresh ul#sofresh_links li.sofresh-active .icon-checkbox-unchecked { display: none; }
-#sofresh ul#sofresh_links li.sofresh-inactive .icon-checkbox-unchecked { display: inline-block; }
+#sofresh ul#sofresh_links li .sofresh-icon { margin: 0 4px 0 0; }
+#sofresh ul#sofresh_links li.sofresh-active .sofresh-icon-checkbox-checked { display: inline-block; }
+#sofresh ul#sofresh_links li.sofresh-inactive .sofresh-icon-checkbox-checked { display: none; }
+#sofresh ul#sofresh_links li.sofresh-active .sofresh-icon-checkbox-unchecked { display: none; }
+#sofresh ul#sofresh_links li.sofresh-inactive .sofresh-icon-checkbox-unchecked { display: inline-block; }
 #sofresh ul#sofresh_links li input { position: absolute; top: -50000px; }
 #sofresh.sofresh-hide-inactive ul#sofresh_links li.sofresh-inactive { display: none; }
 
