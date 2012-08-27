@@ -56,7 +56,6 @@ function get_inline_image($src) {
  *  - http://en.wikipedia.org/wiki/MIT_License
  *  - http://en.wikipedia.org/wiki/GNU_General_Public_License
  * 
- * TODO Refresh a file when checked
  * TODO List distant files (don't hide them, just use a different class)
  * TODO Add a custom CSS input text at the bottom of the widget
  */
@@ -88,12 +87,12 @@ function get_inline_image($src) {
 			for (var a = 0, l = links.length; a < l; a++) {
 				var link = links[a], new_time = phpjs.filemtime(this.getRandom(link.href));
 				// has been checked before or first try
-				if (link.last || !this.initialized) {
+				if ((link.last || !this.initialized) || link.force_refresh) {
 					// has been changed or first try
-					if (link.last != new_time || !this.initialized) {
+					if ((link.last != new_time || !this.initialized) || link.force_refresh) {
 						// reload
 						link.elem.setAttribute('href', this.getRandom(this.getHref(link.elem)));
-						if (this.initialized){
+						if (this.initialized) {
 							elem = $sf('#sofresh_links label[for="sofresh_link_' + $sf(link.elem).data('sofresh-link') + '"]').parents('li');
 							elem.addClass('sofresh-highlight');
 							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 1100);
@@ -102,6 +101,7 @@ function get_inline_image($src) {
 				}
 				// set last time checked
 				link.last = new_time;
+				link.force_refresh = false;
 			}
 			if (!this.initialized) this.initialized = true;
 			this.reload_timeout = setTimeout(function(){
@@ -356,7 +356,7 @@ function get_inline_image($src) {
 		};
 
 		this.initEvents = function(){
-			$this = this;
+			var $this = this;
 			// - Update the array of CSS files to reload
 			// - Define startup cookie
 			$sf('#sofresh_links input:checkbox').on('change', function(){
@@ -366,7 +366,8 @@ function get_inline_image($src) {
 				inputs.each(function(j,input){
 					$input = $sf(input);
 					if ($input.is(':checked')) {
-						checked_links.push(links[j]);
+						if ($this.initialized) $this.links[j].force_refresh = true;
+						checked_links.push($this.links[j]);
 						$input.parents('li').first().removeClass('sofresh-inactive').addClass('sofresh-active');
 					} else {
 						$input.parents('li').first().removeClass('sofresh-active').addClass('sofresh-inactive');
