@@ -289,7 +289,7 @@ function get_inline_image($src) {
 				$sf('#sofresh_content').hide();
 			}
 			if (this.hide_inactive) {
-				this.container.addClass('hide_inactive');
+				this.container.addClass('sofresh-hide-inactive');
 			}
 			this.container.css({ top: this.position.top, left: this.position.left });
 		};
