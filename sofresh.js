@@ -1,7 +1,11 @@
 <?php
 
-define('SOFRESH_VERSION', '1.2');
-define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', getlastmod()) . ' GMT');
+define('SOFRESH_VERSION', '1.0beta');
+
+if (isset($_GET['nocache']))
+	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', time()) . ' GMT');
+else
+	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', getlastmod()) . ' GMT');
 
 $baseUrl = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
 
@@ -67,7 +71,12 @@ function get_inline_image($src) {
 	
 	// if we call the bookmarlet several times: clean everything!
 	if (typeof $sf == 'undefined') $sf = jQuery.noConflict(true);
-	if (typeof window.soFresh == 'function') {
+	if (typeof window.soFresh == 'function') window.soFreshDestroy();
+	
+	/**
+	 * soFresh destructor
+	 */
+	window.soFreshDestroy = function() {
 		// timeout
 		clearTimeout(window.soFresh.reload_timeout);
 		// object
@@ -77,6 +86,7 @@ function get_inline_image($src) {
 		$sf('#sofresh_header').off('mousedown');
 		$sf('#sofresh_header').off('mouseup');
 		$sf('#sofresh_links input:checkbox').off('change');
+		$sf('#sofresh_close').off('click');
 		$sf('#sofresh_content_toggler').off('click');
 		$sf('#sofresh_content_actions_toggler').off('click');
 		$sf('#sofresh_content_actions').off('mouseleave');
@@ -86,10 +96,11 @@ function get_inline_image($src) {
 		// elements
 		$sf('#sofresh').remove();
 		$sf('#sofresh-style').remove();
+		return false;
 	};
 	
 	/**
-	 * soFresh
+	 * soFresh constructor
 	 */
 	window.soFresh = function(){
 
@@ -357,15 +368,19 @@ function get_inline_image($src) {
 						} else {
 							checked = 'checked="checked"';
 						}
-						html += '<li title="' + href + '" class="' + li_class + '">';
-							html += '<label for="sofresh_link_' + i + '">';
-								html += '<input type="checkbox" name="sofresh_links_filters[]" id="sofresh_link_' + i + '" ' + checked + ' /> ';
-								html += '<img src="<?php get_inline_image("checkbox_checked_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-checked" />';
-								html += '<img src="<?php get_inline_image("checkbox_unchecked_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-unchecked" />';
-								html += filename; 
-							html += '</label>';
-							html += '<a href="' + href + '" title="' + href + '" target="_blank" class="arrow">&rarr;</a>';
-						html += '</li>';
+						html += '<li title="' + href + '" class="' + li_class + '">'+
+									'<label for="sofresh_link_' + i + '">'+
+										'<input type="checkbox" name="sofresh_links_filters[]" id="sofresh_link_' + i + '" ' + checked + ' /> '+
+										'<span class="sofresh-icon-wrapper"> '+
+											'<img src="<?php get_inline_image("checkbox_checked_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-checked" />'+
+											'<img src="<?php get_inline_image("checkbox_unchecked_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-unchecked" />'+
+										'</span> '+
+										filename +
+									'</label>'+
+									'<a href="' + href + '" title="' + href + '" target="_blank">'+
+										'<img src="<?php get_inline_image("rnd_br_next_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-br-next" />'+
+									'</a>'+
+								'</li>';
 						i++;
 					} else {
 						if (console) console.warn("[SoFresh] A non-local CSS file will not be resfreshed: " + href);
@@ -398,6 +413,7 @@ function get_inline_image($src) {
 				$this.reloadFile(checked_links);
 			}).trigger('change');
 			// UI events
+			$sf('#sofresh_close').on('click', window.soFreshDestroy);
 			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
 			$sf('#sofresh_content_actions_toggler').on('click', function(){ return $this.toggleActionsList() });
 			$sf('#sofresh_content_actions').on('mouseleave', this.hideActionsList);
@@ -416,16 +432,14 @@ function get_inline_image($src) {
 						'<div id="sofresh_header">'+
 							'<span id="sofresh_check"></span>'+
 							'<span id="sofresh_title"><i></i>soFresh!</span>'+
-							'<span id="sofresh_content_toggler" class="arrow inverted">→</span>'+
+							'<span id="sofresh_content_toggler" title="Toggle expanded / collapsed view">'+
+								'<img src="<?php get_inline_image("rnd_br_down_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
+							'</span>'+
 						'</div>'+
 						'<div id="sofresh_content">'+
 							'<div id="sofresh_content_actions">'+
-								'<a href="#" id="sofresh_content_actions_toggler"><img src="<?php get_inline_image("cog_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-cog" /> Actions...</a>'+
-								'<ul id="sofresh_content_actions_list">'+
-									'<li><a href="#" id="sofresh_check_all">Activate all files</a></li>'+
-									'<li><a href="#" id="sofresh_uncheck_all">Deactivate all files</a></li>'+
-									'<li><a href="#" id="sofresh_hide_inactive"><span class="sofresh-show">Show deactivated files</span><span class="sofresh-hide">Hide deactivated files</span></a></li>'+
-								'</ul>'+
+								'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
+								'<span id="sofresh_close" title="Close soFresh!"><img src="<?php get_inline_image("round_delete_icon&24.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 							'</div>'+
 						'</div>'+
 						'<div id="sofresh_footer">'+
@@ -444,6 +458,6 @@ function get_inline_image($src) {
 		this.initDragAndDrop();
 	};
 
-	window.soFreshIntance = window.soFresh();
+	window.soFresh();
 
 })();
