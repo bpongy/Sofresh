@@ -88,11 +88,8 @@ function get_inline_image($src) {
 		$sf('#sofresh_links input:checkbox').off('change');
 		$sf('#sofresh_close').off('click');
 		$sf('#sofresh_content_toggler').off('click');
-		$sf('#sofresh_content_actions_toggler').off('click');
-		$sf('#sofresh_content_actions').off('mouseleave');
 		$sf('#sofresh_check_all').off('click');
 		$sf('#sofresh_uncheck_all').off('click');
-		$sf('#sofresh_hide_inactive').off('click');
 		// elements
 		$sf('#sofresh').remove();
 		$sf('#sofresh-style').remove();
@@ -111,7 +108,6 @@ function get_inline_image($src) {
 		this.links = [];
 		this.active_files = [];
 		this.expanded = true;
-		this.hide_inactive = false;
 		this.position = { left: 0, top: 0 };
 
 		this.reloadFile = function(links) {
@@ -211,7 +207,7 @@ function get_inline_image($src) {
 		};
 		
 		this.toggleContent = function(){
-			$sf('#sofresh_content').slideToggle(250, 'linear');
+			//$sf('#sofresh_content').slideToggle(250, 'linear');
 			this.container.toggleClass('sofresh-expanded');
 			this.container.toggleClass('sofresh-collapsed');
 			this.expanded = this.container.hasClass('sofresh-expanded');
@@ -219,46 +215,13 @@ function get_inline_image($src) {
 			return false;
 		};
 
-		this.toggleActionsList = function(){
-			if ($sf('#sofresh_content_actions_list').hasClass('sofresh-active')) {
-				this.hideActionsList();
-			} else {
-				this.showActionsList();
-			}
-			return false;
-		};
-
-		this.showActionsList = function(){
-			$sf('#sofresh_content_actions_list').addClass('sofresh-active');
-			return false;
-		};
-
-		this.hideActionsList = function(){
-			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
-			return false;
-		};
-
 		this.checkAll = function(){
 			$sf('#sofresh_links input:checkbox').attr('checked', 'checked').first().trigger('change');
-			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
 			return false;
 		};
 
 		this.uncheckAll = function(){
 			$sf('#sofresh_links input:checkbox').removeAttr('checked').first().trigger('change');
-			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
-			return false;
-		};
-
-		this.hideInactiveLinks = function(){
-			if (this.hide_inactive) {
-				this.hide_inactive = false;
-				this.container.removeClass('sofresh-hide-inactive');
-			} else {
-				this.hide_inactive = true;
-				this.container.addClass('sofresh-hide-inactive');
-			}
-			$sf('#sofresh_content_actions_list').removeClass('sofresh-active');
 			return false;
 		};
 
@@ -270,10 +233,9 @@ function get_inline_image($src) {
 				});
 				this.active_files = selected_files;
 				var sofresh_state = {
-					'active_files'  : this.active_files.join(','),
-					'expanded'      : this.expanded,
-					'hide_inactive' : this.hide_inactive,
-					'position'      : this.position
+					'active_files' : this.active_files.join(','),
+					'expanded'     : this.expanded,
+					'position'     : this.position
 				};
 				var date_exp = new Date();
 				date_exp.setTime(date_exp.getTime()+(365*24*3600*1000));
@@ -291,16 +253,11 @@ function get_inline_image($src) {
 					var sofresh_state  = JSON.parse(sofresh_state_cookie);
 					this.active_files  = sofresh_state.active_files.split(',');
 					this.expanded      = sofresh_state.expanded;
-					this.hide_inactive = sofresh_state.hide_inactive;
 					this.position      = sofresh_state.position;
 				}
 			}
 			if (this.expanded === false) {
 				this.container.removeClass('sofresh-expanded').addClass('sofresh-collapsed');
-				$sf('#sofresh_content').hide();
-			}
-			if (this.hide_inactive) {
-				this.container.addClass('sofresh-hide-inactive');
 			}
 			this.container.css({ top: this.position.top, left: this.position.left });
 		};
@@ -415,11 +372,8 @@ function get_inline_image($src) {
 			// UI events
 			$sf('#sofresh_close').on('click', window.soFreshDestroy);
 			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
-			$sf('#sofresh_content_actions_toggler').on('click', function(){ return $this.toggleActionsList() });
-			$sf('#sofresh_content_actions').on('mouseleave', this.hideActionsList);
 			$sf('#sofresh_check_all').on('click', { links: this.links }, this.checkAll);
 			$sf('#sofresh_uncheck_all').on('click', { links: this.links }, this.uncheckAll);
-			$sf('#sofresh_hide_inactive').on('click', function(){ return $this.hideInactiveLinks(); });
 		};
 		
 		this.initHTML = function(){
