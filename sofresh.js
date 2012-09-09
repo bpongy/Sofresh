@@ -91,6 +91,7 @@ function get_inline_image($src) {
 		$sf('#sofresh_header').off('mousedown');
 		$sf('#sofresh_header').off('mouseup');
 		$sf('#sofresh_links input:checkbox').off('change');
+		$sf('#sofresh_links label').off('click');
 		$sf('#sofresh_close').off('click');
 		$sf('#sofresh_content_toggler').off('click');
 		$sf('#sofresh_check_all').off('click');
@@ -360,11 +361,10 @@ function get_inline_image($src) {
 				var inputs = $sf('#sofresh_links input');
 				var checked_links = [];
 				var $input;
-				inputs.each(function(j,input){
+				inputs.each(function(i, input){
 					$input = $sf(input);
 					if ($input.is(':checked')) {
-						if ($this.initialized) $this.links[j].force_refresh = true;
-						checked_links.push($this.links[j]);
+						checked_links.push($this.links[i]);
 						$input.parents('li').first().removeClass('sofresh-inactive').addClass('sofresh-active');
 					} else {
 						$input.parents('li').first().removeClass('sofresh-active').addClass('sofresh-inactive');
@@ -373,6 +373,13 @@ function get_inline_image($src) {
 				$this.saveState();
 				$this.reloadFile(checked_links);
 			}).trigger('change');
+			// Refresh on check
+			$sf('#sofresh_links label').on('click', function(){
+				$label = $sf(this);
+				var i = $label.attr('for').replace(/sofresh_link_/i, '');
+				$this.links[i].force_refresh = true;
+				console.log($this.links[i]);
+			});
 			// UI events
 			$sf('#sofresh_close').on('click', window.soFreshDestroy);
 			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
