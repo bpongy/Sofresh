@@ -79,6 +79,11 @@ function get_inline_image($src) {
 	window.soFreshDestroy = function() {
 		// timeout
 		clearTimeout(window.soFresh.reload_timeout);
+		// remove random param at the end of link URLs
+		var links = document.getElementsByTagName('link');
+		for (i=0; i<links.length; i++) {
+			links[i].href = links[i].href.replace(/([&\?]{1}sofresh-rand=[0-9\.]*)+/i, '');
+		}
 		// object
 		window.soFresh = null;
 		// events
@@ -166,10 +171,10 @@ function get_inline_image($src) {
 		};
 
 		this.getRandom = function(f){
-			if (f.indexOf('?') > -1)
-				return f + '&x=' + Math.random();
-			else
-				return f + '?x=' + Math.random();
+			f = f.replace(/([&\?]{1}sofresh-rand=[0-9\.]*)+/i, '');
+			return (f.indexOf('?') > -1) ?
+				f + '&sofresh-rand=' + Math.random() :
+				f + '?sofresh-rand=' + Math.random() ;
 		};
 
 		this.setCookie = function(name, value){
@@ -207,7 +212,6 @@ function get_inline_image($src) {
 		};
 		
 		this.toggleContent = function(){
-			//$sf('#sofresh_content').slideToggle(250, 'linear');
 			this.container.toggleClass('sofresh-expanded');
 			this.container.toggleClass('sofresh-collapsed');
 			this.expanded = this.container.hasClass('sofresh-expanded');
