@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION', '1.0beta');
+define('SOFRESH_VERSION', '1.0');
 
 if (isset($_GET['nocache']))
 	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', time()) . ' GMT');
@@ -378,7 +378,6 @@ function get_inline_image($src) {
 				$label = $sf(this);
 				var i = $label.attr('for').replace(/sofresh_link_/i, '');
 				$this.links[i].force_refresh = true;
-				console.log($this.links[i]);
 			});
 			// UI events
 			$sf('#sofresh_close').on('click', window.soFreshDestroy);
