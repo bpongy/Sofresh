@@ -400,12 +400,11 @@ function get_inline_image($src) {
 								'<img src="<?php get_inline_image("rnd_br_down_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
 							'</span>'+
 						'</div>'+
-						'<div id="sofresh_content">'+
-							'<div id="sofresh_content_actions">'+
-								'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
-								'<span id="sofresh_close" title="Close soFresh!"><img src="<?php get_inline_image("round_delete_icon&24.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
-							'</div>'+
+						'<div id="sofresh_content_actions">'+
+							'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
+							'<span id="sofresh_close" title="Close soFresh!"><img src="<?php get_inline_image("round_delete_icon&24.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 						'</div>'+
+						'<div id="sofresh_content"></div>'+
 						'<div id="sofresh_footer">'+
 							'<a href="http://sofresh.redpik.net/">soFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
