@@ -156,6 +156,7 @@
 	border: 1px solid #eee;
 	font-size: 10px;
 	color: #aaa;
+	background: #fff;
 }
 
 #sofresh #sofresh_content_actions a {
@@ -200,10 +201,12 @@
 	border-bottom: 1px dotted #eee;
 	padding: 6px 0;
 	background-color: #fff;
+	/*
 	-webkit-transition: 0.3s background-color ease;
 	   -moz-transition: 0.3s background-color ease;
 	     -o-transition: 0.3s background-color ease;
 	        transition: 0.3s background-color ease;
+	*/
 }
 
 #sofresh #sofresh_links li.sofresh-highlight {
