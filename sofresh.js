@@ -18,9 +18,9 @@ $css = str_replace("\n", ' ', $css);
 $css = str_replace("\t", ' ', $css);
 $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
-function get_inline_image($src) {
-	echo 'data:image/png;base64,'.base64_encode(file_get_contents(dirname(__FILE__).'/img/'.$src));
-}
+
+# Functions
+require_once dirname(__FILE__).'/php/sofresh.php';
 
 ?>
 /*!
@@ -59,9 +59,6 @@ function get_inline_image($src) {
  * Dual licensed under the MIT and GPL licenses:
  *  - http://en.wikipedia.org/wiki/MIT_License
  *  - http://en.wikipedia.org/wiki/GNU_General_Public_License
- * 
- * TODO List distant files (don't hide them, just use a different class)
- * TODO Add a custom CSS input text at the bottom of the widget
  */
 (function(){
 	
@@ -385,7 +382,7 @@ function get_inline_image($src) {
 			$sf('#sofresh_check_all').on('click', { links: this.links }, this.checkAll);
 			$sf('#sofresh_uncheck_all').on('click', { links: this.links }, this.uncheckAll);
 		};
-		
+
 		this.initHTML = function(){
 			// CSS
 			$sf('head').append('<style type="text/css" id="sofresh-style"><?php echo $css; ?></style>');
@@ -409,6 +406,7 @@ function get_inline_image($src) {
 							'<a href="http://sofresh.redpik.net/">soFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
 					'</div>'+
+					'<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />'+
 				'</div>'
 			);
 			this.container = $sf('#sofresh');
