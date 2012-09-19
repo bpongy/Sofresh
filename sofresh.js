@@ -208,7 +208,17 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			}
 			return null;
 		};
-		
+
+		this.getDoNotTrack = function(){
+			if (navigator.doNotTrack) {
+				return (navigator.doNotTrack == 1 || navigator.doNotTrack == true || navigator.doNotTrack == 'yes');
+			} else if (navigator.msDoNotTrack) {
+				return (navigator.msDoNotTrack != 0);
+			} else {
+				return false;
+			}
+		};
+
 		this.toggleContent = function(){
 			this.container.toggleClass('sofresh-expanded');
 			this.container.toggleClass('sofresh-collapsed');
@@ -406,7 +416,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 							'<a href="http://sofresh.redpik.net/">SoFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
 					'</div>'+
-					'<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />'+
+					(this.getDoNotTrack() ? '' : '<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />')+
 				'</div>'
 			);
 			this.container = $sf('#sofresh');
