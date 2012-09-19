@@ -1,5 +1,5 @@
-Sofresh
+SoFresh
 =======
 
-Sofresh - CSS bookmarklet
+SoFresh - CSS bookmarklet
 http://sofresh.redpik.net/

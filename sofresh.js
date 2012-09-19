@@ -32,7 +32,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  * |_|  \___|\__,_| .__/|_|_|\_(_)_| |_|\___|\__)
  *                |_|                            
  * 
- * soFresh!
+ * SoFresh!
  * Version: <?php echo SOFRESH_VERSION."\n"; ?>
  * Last-Modified: <?php echo SOFRESH_LAST_MODIFIED."\n"; ?>
  * 
@@ -52,7 +52,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  *  - The Creative Commons Attribution-NonCommercial
  *  - http://gentleface.com/
  * 
- * soFresh:
+ * SoFresh:
  *  - Copyright (c) 2012 Benjamin Pongy & Nicolas Sorosac & Sylvain Gougouzian
  *  - http://www.axome.com/
  * 
@@ -71,7 +71,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	if (typeof window.soFresh == 'function') window.soFreshDestroy();
 	
 	/**
-	 * soFresh destructor
+	 * SoFresh destructor
 	 */
 	window.soFreshDestroy = function() {
 		// timeout
@@ -100,7 +100,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	};
 	
 	/**
-	 * soFresh constructor
+	 * SoFresh constructor
 	 */
 	window.soFresh = function(){
 
@@ -392,18 +392,18 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 					'<div>'+
 						'<div id="sofresh_header">'+
 							'<span id="sofresh_check"></span>'+
-							'<span id="sofresh_title"><i></i>soFresh!</span>'+
+							'<span id="sofresh_title"><i></i>SoFresh!</span>'+
 							'<span id="sofresh_content_toggler" title="Toggle expanded / collapsed view">'+
 								'<img src="<?php get_inline_image("rnd_br_down_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
 							'</span>'+
 						'</div>'+
 						'<div id="sofresh_content_actions">'+
 							'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
-							'<span id="sofresh_close" title="Close soFresh!"><img src="<?php get_inline_image("round_delete_icon&16.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
+							'<span id="sofresh_close" title="Close SoFresh!"><img src="<?php get_inline_image("round_delete_icon&16.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 						'</div>'+
 						'<div id="sofresh_content"></div>'+
 						'<div id="sofresh_footer">'+
-							'<a href="http://sofresh.redpik.net/">soFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
+							'<a href="http://sofresh.redpik.net/">SoFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
 					'</div>'+
 					'<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />'+
