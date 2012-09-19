@@ -331,13 +331,13 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 									'<label for="sofresh_link_' + i + '">'+
 										'<input type="checkbox" name="sofresh_links_filters[]" id="sofresh_link_' + i + '" ' + checked + ' /> '+
 										'<span class="sofresh-icon-wrapper"> '+
-											'<img src="<?php get_inline_image("checkbox_checked_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-checked" />'+
-											'<img src="<?php get_inline_image("checkbox_unchecked_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-unchecked" />'+
+											'<img src="<?php get_inline_image("checkbox_checked_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-checked" />'+
+											'<img src="<?php get_inline_image("checkbox_unchecked_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-checkbox-unchecked" />'+
 										'</span> '+
 										filename +
 									'</label>'+
 									'<a href="' + href + '" title="' + href + '" target="_blank">'+
-										'<img src="<?php get_inline_image("rnd_br_next_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-br-next" />'+
+										'<img src="<?php get_inline_image("rnd_br_next_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-br-next" />'+
 									'</a>'+
 								'</li>';
 						i++;
@@ -394,12 +394,12 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 							'<span id="sofresh_check"></span>'+
 							'<span id="sofresh_title"><i></i>soFresh!</span>'+
 							'<span id="sofresh_content_toggler" title="Toggle expanded / collapsed view">'+
-								'<img src="<?php get_inline_image("rnd_br_down_icon&24.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
+								'<img src="<?php get_inline_image("rnd_br_down_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
 							'</span>'+
 						'</div>'+
 						'<div id="sofresh_content_actions">'+
 							'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
-							'<span id="sofresh_close" title="Close soFresh!"><img src="<?php get_inline_image("round_delete_icon&24.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
+							'<span id="sofresh_close" title="Close soFresh!"><img src="<?php get_inline_image("round_delete_icon&16.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 						'</div>'+
 						'<div id="sofresh_content"></div>'+
 						'<div id="sofresh_footer">'+
