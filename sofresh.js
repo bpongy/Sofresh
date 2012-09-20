@@ -54,7 +54,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  * 
  * SoFresh:
  *  - Copyright (c) 2012 Benjamin Pongy & Nicolas Sorosac & Sylvain Gougouzian
- *  - http://www.axome.com/
+ *  - http://www.redpik.net/
  * 
  * Dual licensed under the MIT and GPL licenses:
  *  - http://en.wikipedia.org/wiki/MIT_License
