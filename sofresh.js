@@ -84,6 +84,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		// object
 		window.soFresh = null;
 		// events
+		$sf(window).off('resize');
 		$sf(document).off('mousemove');
 		$sf('#sofresh_header').off('mousedown');
 		$sf('#sofresh_header').off('mouseup');
@@ -237,6 +238,13 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			return false;
 		};
 
+		this.reposition = function(){
+			if (this.position.left + this.container.width() > document.body.clientWidth) {
+				this.position.left = document.body.clientWidth - this.container.width() - 50;
+				this.container.css('left', this.position.left);
+			}
+		};
+
 		this.saveState = function() {
 			if (navigator.cookieEnabled) {
 				var selected_files = [];
@@ -387,6 +395,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 				$this.links[i].force_refresh = true;
 			});
 			// UI events
+			$sf(window).on('resize', function(){ $this.reposition() }).trigger('resize');
 			$sf('#sofresh_close').on('click', window.soFreshDestroy);
 			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
 			$sf('#sofresh_check_all').on('click', { links: this.links }, this.checkAll);
