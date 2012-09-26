@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION', '1.0');
+define('SOFRESH_VERSION', '1.0.1');
 
 if (isset($_GET['nocache']))
 	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', time()) . ' GMT');
@@ -84,8 +84,8 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		// object
 		window.soFresh = null;
 		// events
-		$sf(window).off('resize');
-		$sf(document).off('mousemove');
+		$sf(window).off('resize.sofresh');
+		$sf(document).off('mousemove.sofresh');
 		$sf('#sofresh_header').off('mousedown');
 		$sf('#sofresh_header').off('mouseup');
 		$sf('#sofresh_links input:checkbox').off('change');
@@ -286,7 +286,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			var $this = this,
 				initX = false,
 				initY = false;
-			$sf(document).on('mousemove', function(event){
+			$sf(document).on('mousemove.sofresh', function(event){
 				if ($this.container.hasClass('sofresh-movable')) {
 					event.preventDefault();
 					if (!initX) initX = event.pageX;
@@ -395,7 +395,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 				$this.links[i].force_refresh = true;
 			});
 			// UI events
-			$sf(window).on('resize', function(){ $this.reposition() }).trigger('resize');
+			$sf(window).on('resize.sofresh', function(){ $this.reposition() }).trigger('resize.sofresh');
 			$sf('#sofresh_close').on('click', window.soFreshDestroy);
 			$sf('#sofresh_content_toggler').on('click', function(){ return $this.toggleContent() });
 			$sf('#sofresh_check_all').on('click', { links: this.links }, this.checkAll);
