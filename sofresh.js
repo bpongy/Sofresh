@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION', '1.0.1');
+define('SOFRESH_VERSION', '1.0.2');
 
 if (isset($_GET['nocache']))
 	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', time()) . ' GMT');
@@ -147,12 +147,10 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 
 		this.isLocalHref = function(href){
 			if (href == null) return false;
-			var bootstrap_regexp = /bootstrap(-responsive)?(\.min)?\.css/i;
 			return !(
 				(href.indexOf('//') > -1 && href.indexOf('//') <= 6 && href.indexOf('//'+location.hostname+'/') == -1) ||
 				href.indexOf('chrome-extension://') > -1 ||
-				href.indexOf('data:text/css') > -1 ||
-				bootstrap_regexp.test(href)
+				href.indexOf('data:text/css') > -1
 			);
 		};
 
