@@ -456,7 +456,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 						'</div>'+
 						'<div id="sofresh_content"></div>'+
 						'<div id="sofresh_footer">'+
-							'<a href="http://sofresh.redpik.net/" target="_blank">SoFresh!</a> v<?php echo SOFRESH_VERSION_WIDGET; ?> (<?php echo SOFRESH_VERSION_BOOKMARKLET; ?>) by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
+							'<a href="http://sofresh.redpik.net/" target="_blank">SoFresh! <?php echo SOFRESH_VERSION_WIDGET; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
 					'</div>'+
 					(this.getDoNotTrack() ? '' : '<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />')+
