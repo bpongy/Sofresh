@@ -147,6 +147,34 @@
 	border-bottom: 0;
 }
 
+#sofresh #sofresh_messages .sofresh_message {
+	padding: 5px;
+	border: 1px solid #eee;
+	border-bottom: none;
+	font-size: 0.9em;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+#sofresh #sofresh_messages .sofresh_message a {
+	display: inline;
+	font-size: 1em;
+	text-decoration: underline;
+}
+
+#sofresh #sofresh_messages .sofresh_message_info {
+	color: #c09853;
+	background: #fcf8e3;
+	border-color: #fbeed5;
+}
+
+#sofresh #sofresh_messages .sofresh_message_info a {
+	color: #c09853;
+}
+
+#sofresh #sofresh_messages .sofresh_message_info a:hover {
+	color: #805E24;
+}
+
 #sofresh #sofresh_content_actions {
 	padding: 5px;
 	margin: 0;

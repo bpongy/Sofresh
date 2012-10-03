@@ -1,6 +1,7 @@
 <?php
 
-define('SOFRESH_VERSION', '1.0.2');
+define('SOFRESH_VERSION_WIDGET', '1.0.3');
+define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
 	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', time()) . ' GMT');
@@ -25,15 +26,16 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 ?>
 /*!
  *               _       _ _
- *              | |     (_) |                _  
- *  _ __ ___  __| |_ __  _| | __  _ __   ___| |_ 
+ *              | |     (_) |                _
+ *  _ __ ___  __| |_ __  _| | __  _ __   ___| |_
  * | '__/ . \/ _` | '_ \| | |/ / | '_ \ / . \  _)
- * | | |  __/ (_) | (_) ) |   ( _| | | (  __/ |_ 
+ * | | |  __/ (_) | (_) ) |   ( _| | | (  __/ |_
  * |_|  \___|\__,_| .__/|_|_|\_(_)_| |_|\___|\__)
- *                |_|                            
+ *                |_|
  * 
  * SoFresh!
- * Version: <?php echo SOFRESH_VERSION."\n"; ?>
+ * Widget Version: <?php echo SOFRESH_VERSION_WIDGET."\n"; ?>
+ * Bookmarklet Version: <?php echo SOFRESH_VERSION_BOOKMARKLET."\n"; ?>
  * Last-Modified: <?php echo SOFRESH_LAST_MODIFIED."\n"; ?>
  * 
  * jQuery:
@@ -61,15 +63,15 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  *  - http://en.wikipedia.org/wiki/GNU_General_Public_License
  */
 (function(){
-	
+
 	<?php include_once dirname(__FILE__).'/js/jquery.js'; ?>
 
 	<?php include_once dirname(__FILE__).'/js/php.js'; ?>
-	
+
 	// if we call the bookmarlet several times: clean everything!
 	if (typeof $sf == 'undefined') $sf = jQuery.noConflict(true);
 	if (typeof window.soFresh == 'function') window.soFreshDestroy();
-	
+
 	/**
 	 * SoFresh destructor
 	 */
@@ -99,7 +101,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		$sf('#sofresh-style').remove();
 		return false;
 	};
-	
+
 	/**
 	 * SoFresh constructor
 	 */
@@ -113,6 +115,38 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		this.active_files = [];
 		this.expanded = true;
 		this.position = { left: 0, top: 0 };
+
+		this.compareVersions = function(a, b) {
+			var aa = a.split('.');
+			var bb = b.split('.');
+			for (var i = 0; i < aa.length; ++i) {
+				if (bb.length == i) return 1;
+				if (aa[i] == bb[i]) {
+					continue;
+				} else if (aa[i] > bb[i]) {
+					return 1;
+				} else return -1;
+			}
+			if (aa.length != bb.length) return -1;
+			return 0;
+		};
+
+		this.checkVersion = function() {
+			if (typeof window.sofreshBookmarklet == 'object') {
+				if (this.compareVersions('<?php echo SOFRESH_VERSION_BOOKMARKLET; ?>', window.sofreshBookmarklet.version) == 1) {
+					this.displayMessage('New bookmarklet version. <a href="http://sofresh.redpik.net/#update-your-bookmarklet">Read more &rarr;</a>', 'info');
+				}
+			} else {
+				this.displayMessage('New bookmarklet version. <a href="http://sofresh.redpik.net/#update-your-bookmarklet">Read more &rarr;</a>', 'info');
+			}
+		};
+
+		this.displayMessage = function(msg, type) {
+			if (msg != '') {
+				var type = type || 'info';
+				$sf('<span class="sofresh_message sofresh_message_' + type + '">' + msg + '</span>').appendTo(this.container.find('#sofresh_messages'));
+			}
+		};
 
 		this.reloadFile = function(links) {
 			clearTimeout(this.reload_timeout);
@@ -414,13 +448,14 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 								'<img src="<?php get_inline_image("rnd_br_down_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
 							'</span>'+
 						'</div>'+
+						'<div id="sofresh_messages"></div>'+
 						'<div id="sofresh_content_actions">'+
 							'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
 							'<span id="sofresh_close" title="Close SoFresh!"><img src="<?php get_inline_image("round_delete_icon&16.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 						'</div>'+
 						'<div id="sofresh_content"></div>'+
 						'<div id="sofresh_footer">'+
-							'<a href="http://sofresh.redpik.net/">SoFresh! <?php echo SOFRESH_VERSION; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
+							'<a href="http://sofresh.redpik.net/" target="_blank">SoFresh!</a> v<?php echo SOFRESH_VERSION_WIDGET; ?> (<?php echo SOFRESH_VERSION_BOOKMARKLET; ?>) by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
 					'</div>'+
 					(this.getDoNotTrack() ? '' : '<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />')+
@@ -434,6 +469,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		this.initFilesList();
 		this.initEvents();
 		this.initDragAndDrop();
+		this.checkVersion();
 	};
 
 	window.soFresh();
