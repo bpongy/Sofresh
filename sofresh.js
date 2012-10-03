@@ -85,6 +85,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		}
 		// object
 		window.soFresh = null;
+		window.soFreshBookmarklet = null;
 		// events
 		$sf(window).off('resize.sofresh');
 		$sf(document).off('mousemove.sofresh');
@@ -132,8 +133,8 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		};
 
 		this.checkVersion = function() {
-			if (typeof window.sofreshBookmarklet == 'object') {
-				if (this.compareVersions('<?php echo SOFRESH_VERSION_BOOKMARKLET; ?>', window.sofreshBookmarklet.version) == 1) {
+			if (typeof window.soFreshBookmarklet == 'object') {
+				if (this.compareVersions('<?php echo SOFRESH_VERSION_BOOKMARKLET; ?>', window.soFreshBookmarklet.version) == 1) {
 					this.displayMessage('New bookmarklet version. <a href="http://sofresh.redpik.net/#update-your-bookmarklet">Read more &rarr;</a>', 'info');
 				}
 			} else {
