@@ -77,7 +77,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	 */
 	window.soFreshDestroy = function() {
 		// timeout
-		clearTimeout(window.soFresh.reload_timeout);
+		clearTimeout(window.soFreshReloadTimeout);
 		// remove random param at the end of link URLs
 		var links = document.getElementsByTagName('link');
 		for (i=0; i<links.length; i++) {
@@ -86,6 +86,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		// object
 		window.soFresh = null;
 		window.soFreshBookmarklet = null;
+		window.soFreshReloadTimeout = null;
 		// events
 		$sf(window).off('resize.sofresh');
 		$sf(document).off('mousemove.sofresh');
@@ -108,9 +109,10 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	 */
 	window.soFresh = function(){
 
+		window.soFreshReloadTimeout = null;
+
 		this.initialized = false;
 		this.container = null;
-		this.reload_timeout = null;
 		this.reload_delay = 1000;
 		this.links = [];
 		this.active_files = [];
@@ -150,7 +152,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		};
 
 		this.reloadFile = function(links) {
-			clearTimeout(this.reload_timeout);
+			clearTimeout(window.soFreshReloadTimeout);
 			for (var a = 0, l = links.length; a < l; a++) {
 				var link = links[a], new_time = phpjs.filemtime(this.getRandom(link.href));
 				// has been checked before or first try
@@ -171,7 +173,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 				link.force_refresh = false;
 			}
 			if (!this.initialized) this.initialized = true;
-			this.reload_timeout = setTimeout(function(){
+			window.soFreshReloadTimeout = setTimeout(function(){
 				this.reloadFile(links);
 			}, this.reload_delay);
 		};
