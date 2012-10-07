@@ -149,7 +149,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		this.reloadFile = function(links) {
 			clearTimeout(window.soFreshReloadTimeout);
 			for (var a = 0, l = links.length; a < l; a++) {
-				var link = links[a], new_time = this.getFiletime(this.getRandom(link.href));
+				var link = links[a], new_time = this.getFilemtime(this.getRandom(link.href));
 				// has been checked before or first try
 				if ((link.last || !this.initialized) || link.force_refresh) {
 					// has been changed or first try
@@ -186,12 +186,12 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			);
 		};
 
-		this.getFiletime = function (cssFile) {
+		this.getFilemtime = function(f){
 			var time = 0;
-			$.ajax({
+			$sf.ajax({
 				type: "HEAD",
 				async: false,
-				url:  cssFile,
+				url:  f,
 				success: function(message,text,response){
 					time = response.getResponseHeader('Last-Modified');
 				}
