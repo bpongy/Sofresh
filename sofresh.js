@@ -1,5 +1,7 @@
 <?php
 
+ob_start('ob_gzhandler');
+
 define('SOFRESH_VERSION_WIDGET', '1.0.4');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
@@ -158,7 +160,8 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 							elem = $sf('#sofresh_links label[for="sofresh_link_' + $sf(link.elem).data('sofresh-link') + '"]').parents('li');
 							elem.addClass('sofresh-highlight');
 							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 1100);
-							if (link.href.indexOf('.less?') > -1 && less) less.refresh(true);
+							// LESS files: only refresh if watch mode is off
+							if (link.href.indexOf('.less') > -1 && typeof less == 'object' && !less.watchMode) less.refresh(true);
 						}
 					}
 				}
@@ -474,3 +477,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	window.soFresh();
 
 })();
+<?php
+header('Content-Length: '.ob_get_length());
+ob_end_flush();
+?>
