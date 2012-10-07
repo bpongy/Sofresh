@@ -158,6 +158,8 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 							elem = $sf('#sofresh_links label[for="sofresh_link_' + $sf(link.elem).data('sofresh-link') + '"]').parents('li');
 							elem.addClass('sofresh-highlight');
 							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 1100);
+							if (link.elem.getAttribute('href').indexOf('.less?'))
+								if (less) less.refresh(true);
 						}
 					}
 				}
@@ -352,7 +354,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			
 			for (var a = 0, l = files.length; a < l; a++) {
 				var elem = files[a], rel = elem.rel, filename = '', checked = '', li_class = '';
-				if (typeof rel != 'string' || rel.length == 0 || rel == 'stylesheet') {
+				if (typeof rel != 'string' || rel.length == 0 || rel == 'stylesheet' || rel == 'stylesheet/less') {
 					var href = this.getHref(elem);
 					if (href != null && this.isLocalHref(href)) {
 						this.links.push({
