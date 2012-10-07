@@ -16,6 +16,7 @@ header('Last-Modified: '.SOFRESH_LAST_MODIFIED);
 # Minified CSS
 $css = file_get_contents(dirname(__FILE__).'/css/sofresh.css');
 $css = str_replace("\n", ' ', $css);
+$css = str_replace("\r", ' ', $css);
 $css = str_replace("\t", ' ', $css);
 $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
@@ -42,10 +43,6 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  *  - Copyright (c) jquery.com
  *  - http://jquery.org/license
  * 
- * phpjs:
- *  - MIT + GPL: http://phpjs.org/pages/license
- *  - http://phpjs.org/
- * 
  * CSSrefresh:
  *  - Copyright (c) 2012 Fred Heusschen
  *  - http://www.frebsite.nl/
@@ -65,8 +62,6 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 (function(){
 
 	<?php include_once dirname(__FILE__).'/js/jquery.js'; ?>
-
-	<?php include_once dirname(__FILE__).'/js/php.js'; ?>
 
 	// if we call the bookmarlet several times: clean everything!
 	if (typeof $sf == 'undefined') $sf = jQuery.noConflict(true);
@@ -154,7 +149,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		this.reloadFile = function(links) {
 			clearTimeout(window.soFreshReloadTimeout);
 			for (var a = 0, l = links.length; a < l; a++) {
-				var link = links[a], new_time = phpjs.filemtime(this.getRandom(link.href));
+				var link = links[a], new_time = this.getFiletime(this.getRandom(link.href));
 				// has been checked before or first try
 				if ((link.last || !this.initialized) || link.force_refresh) {
 					// has been changed or first try
@@ -195,7 +190,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			var time = 0;
 			$.ajax({
 				type: "HEAD",
-				async: true,
+				async: false,
 				url:  cssFile,
 				success: function(message,text,response){
 					time = response.getResponseHeader('Last-Modified');
