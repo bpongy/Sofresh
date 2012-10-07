@@ -15,9 +15,7 @@ header('Last-Modified: '.SOFRESH_LAST_MODIFIED);
 
 # Minified CSS
 $css = file_get_contents(dirname(__FILE__).'/css/sofresh.css');
-$css = str_replace("\n", ' ', $css);
-$css = str_replace("\r", ' ', $css);
-$css = str_replace("\t", ' ', $css);
+$css = str_replace(array("\n", "\r", "\t"), ' ', $css);
 $count = 1;
 while ($count) $css = str_replace('  ', ' ', $css, $count);
 
@@ -70,7 +68,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	/**
 	 * SoFresh destructor
 	 */
-	window.soFreshDestroy = function() {
+	window.soFreshDestroy = function(){
 		// timeout
 		clearTimeout(window.soFreshReloadTimeout);
 		// remove random param at the end of link URLs
@@ -114,7 +112,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		this.expanded = true;
 		this.position = { left: 0, top: 0 };
 
-		this.compareVersions = function(a, b) {
+		this.compareVersions = function(a, b){
 			var aa = a.split('.');
 			var bb = b.split('.');
 			for (var i = 0; i < aa.length; ++i) {
@@ -129,7 +127,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			return 0;
 		};
 
-		this.checkVersion = function() {
+		this.checkVersion = function(){
 			if (typeof window.soFreshBookmarklet == 'object') {
 				if (this.compareVersions('<?php echo SOFRESH_VERSION_BOOKMARKLET; ?>', window.soFreshBookmarklet.version) == 1) {
 					this.displayMessage('New bookmarklet version. <a href="http://sofresh.redpik.net/#update-your-bookmarklet">Read more &rarr;</a>', 'info');
@@ -275,7 +273,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			}
 		};
 
-		this.saveState = function() {
+		this.saveState = function(){
 			if (navigator.cookieEnabled) {
 				var selected_files = [];
 				$sf('#sofresh_links input:checked').each(function(){
@@ -312,7 +310,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			this.container.css({ top: this.position.top, left: this.position.left });
 		};
 
-		this.initDragAndDrop = function() {
+		this.initDragAndDrop = function(){
 			var $this = this,
 				initX = false,
 				initY = false;
@@ -456,7 +454,9 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 							'<a href="http://sofresh.redpik.net/" target="_blank">SoFresh! <?php echo SOFRESH_VERSION_WIDGET; ?></a> by <a href="http://nicolas.sorosac.fr/">Nico</a>, <a href="http://www.redpik.net/">Ben</a> &amp; <a href="http://sylvain.gougouzian.fr/">GouZ</a>'+
 						'</div>'+
 					'</div>'+
+					<?php if (isset($_SERVER["HTTP_REFERER"])) : ?>
 					(this.getDoNotTrack() ? '' : '<img src="<?php echo $baseUrl.googleAnalyticsGetImageUrl(); ?>" style="display:none" />')+
+					<?php endif; ?>
 				'</div>'
 			);
 			this.container = $sf('#sofresh');
