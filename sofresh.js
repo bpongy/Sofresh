@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.3');
+define('SOFRESH_VERSION_WIDGET', '1.0.4');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -158,8 +158,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 							elem = $sf('#sofresh_links label[for="sofresh_link_' + $sf(link.elem).data('sofresh-link') + '"]').parents('li');
 							elem.addClass('sofresh-highlight');
 							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 1100);
-							if (link.elem.getAttribute('href').indexOf('.less?'))
-								if (less) less.refresh(true);
+							if (link.href.indexOf('.less?') > -1 && less) less.refresh(true);
 						}
 					}
 				}
