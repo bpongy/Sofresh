@@ -441,15 +441,15 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 					'<div>'+
 						'<div id="sofresh_header">'+
 							'<span id="sofresh_check"></span>'+
-							'<span id="sofresh_title"><i></i>SoFresh!</span>'+
+							'<span id="sofresh_title">SoFresh!<em>it makes your CSS yummy</em></span>'+
 							'<span id="sofresh_content_toggler" title="Toggle expanded / collapsed view">'+
 								'<img src="<?php get_inline_image("rnd_br_down_icon&16.png"); ?>" class="sofresh-icon sofresh-icon-br-down" />'+
 							'</span>'+
+							'<span id="sofresh_close" title="Close SoFresh!"><img src="<?php get_inline_image("round_delete_icon&33.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 						'</div>'+
 						'<div id="sofresh_messages"></div>'+
 						'<div id="sofresh_content_actions">'+
 							'<a href="#" id="sofresh_check_all">check</a> / <a href="#" id="sofresh_uncheck_all">uncheck</a> all files'+
-							'<span id="sofresh_close" title="Close SoFresh!"><img src="<?php get_inline_image("round_delete_icon&16.png"); ?>" class="sofresh-icon sofresh-round-delete" /></span>'+
 						'</div>'+
 						'<div id="sofresh_content"></div>'+
 						'<div id="sofresh_footer">'+

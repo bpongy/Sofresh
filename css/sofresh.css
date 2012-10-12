@@ -25,7 +25,6 @@
 	background-color: rgba(255,255,255,0.35);
 	padding: 5px;
 	z-index: 99999;
-	overflow: hidden;
 	 -webkit-background-clip: padding-box;
 	         background-clip: padding-box;
 	-webkit-box-shadow: 0 0 8px rgba(0,0,0,0.3);
@@ -78,6 +77,14 @@
 	border: 1px solid #000;
 	cursor: move;
 }
+#sofresh #sofresh_header em {
+	display: inline;
+	color: #fff;
+	font-style: italic;
+	font-size: 0.75em;
+	padding: 0 0 0 0.75em;
+	cursor: move;
+}
 
 #sofresh #sofresh_content_toggler {
 	float: right;
@@ -113,6 +120,7 @@
 	        transform: rotate(-180deg);
 }
 
+/*
 #sofresh #sofresh_check {
 	display: none;
 	float: left;
@@ -125,6 +133,7 @@
 	     -o-box-shadow: 1px 1px 0 #222;
 	        box-shadow: 1px 1px 0 #222;
 }
+*/
 
 #sofresh #sofresh_title {
 	float: left;
@@ -138,9 +147,37 @@
 	cursor: move;
 }
 
+#sofresh #sofresh_close {
+	position: absolute;
+	top: -17px;
+	right: -17px;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	-webkit-transition: 0.2s opacity ease;
+	   -moz-transition: 0.2s opacity ease;
+	     -o-transition: 0.2s opacity ease;
+	        transition: 0.2s opacity ease;
+}
+
+#sofresh:hover #sofresh_close {
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
+#sofresh #sofresh_close:hover {
+	filter: alpha(opacity=100) !important;
+	opacity: 1.0 !important;
+}
+
+#sofresh #sofresh_close img {
+	width: 33px;
+	height: 33px;
+	cursor: pointer;
+}
+
 #sofresh #sofresh_content {
 	background: #fff;
-	max-height: 500px;
+	max-height: 200px;
 	overflow: auto;
 	border: 1px solid #eee;
 	border-top: 0;
@@ -194,22 +231,6 @@
 
 #sofresh #sofresh_content_actions a:hover {
 	color: #444;
-}
-
-#sofresh #sofresh_close {
-	float: right;
-	margin: -1px 1px 0 0;
-	filter: alpha(opacity=50);
-	opacity: 0.5;
-}
-
-#sofresh #sofresh_close:hover {
-	filter: alpha(opacity=80);
-	opacity: 0.8;
-}
-
-#sofresh #sofresh_close img {
-	cursor: pointer;
 }
 
 #sofresh #sofresh_links {
@@ -315,7 +336,6 @@
 	padding: 4px 6px;
 	text-align: center;
 	border: 1px solid #eee;
-	border-top: 0;
 	-webkit-border-radius: 0 0 4px 4px;
 	   -moz-border-radius: 0 0 4px 4px;
 	     -o-border-radius: 0 0 4px 4px;
