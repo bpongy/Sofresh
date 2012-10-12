@@ -1,8 +1,6 @@
 <?php
 
-ob_start('ob_gzhandler');
-
-define('SOFRESH_VERSION_WIDGET', '1.0.4');
+define('SOFRESH_VERSION_WIDGET', '1.0.5');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -477,7 +475,3 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	window.soFresh();
 
 })();
-<?php
-header('Content-Length: '.ob_get_length());
-ob_end_flush();
-?>
