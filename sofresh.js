@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.5');
+define('SOFRESH_VERSION_WIDGET', '1.0.6');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -71,11 +71,6 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 	window.soFreshDestroy = function(){
 		// timeout
 		clearTimeout(window.soFreshReloadTimeout);
-		// remove random param at the end of link URLs
-		var links = document.getElementsByTagName('link');
-		for (i=0; i<links.length; i++) {
-			links[i].href = links[i].href.replace(/([&\?]{1}sofresh-rand=[0-9\.]*)+/i, '');
-		}
 		// object
 		window.soFresh = null;
 		window.soFreshBookmarklet = null;
@@ -204,6 +199,13 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			return (f.indexOf('?') > -1) ?
 				f + '&sofresh-rand=' + Math.random() :
 				f + '?sofresh-rand=' + Math.random() ;
+		};
+
+		this.cleanRandom = function(f){
+			var links = document.getElementsByTagName('link');
+			for (i=0; i<links.length; i++) {
+				links[i].href = links[i].href.replace(/([&\?]{1}sofresh-rand=[0-9\.]*)+/i, '');
+			}
 		};
 
 		this.setCookie = function(name, value){
@@ -464,6 +466,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			this.container = $sf('#sofresh');
 		};
 
+		this.cleanRandom();
 		this.initHTML();
 		this.initState();
 		this.initFilesList();
