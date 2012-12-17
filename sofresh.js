@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.6');
+define('SOFRESH_VERSION_WIDGET', '1.0.7');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -175,7 +175,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		this.isLocalHref = function(href){
 			if (href == null) return false;
 			return !(
-				(href.indexOf('//') > -1 && href.indexOf('//') <= 6 && href.indexOf('//'+location.hostname+'/') == -1) ||
+				(href.indexOf('//') > -1 && href.indexOf('//') <= 6 && href.indexOf('//'+location.host+'/') == -1) ||
 				href.indexOf('chrome-extension://') > -1 ||
 				href.indexOf('data:text/css') > -1
 			);
