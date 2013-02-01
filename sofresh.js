@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.7');
+define('SOFRESH_VERSION_WIDGET', '1.0.8');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -73,11 +73,11 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		clearTimeout(window.soFreshReloadTimeout);
 		// object
 		window.soFresh = null;
-		window.soFreshBookmarklet = null;
 		window.soFreshReloadTimeout = null;
 		// events
 		$sf(window).off('resize.sofresh');
 		$sf(document).off('mousemove.sofresh');
+		$sf(document).off('keyup.sofresh');
 		$sf('#sofresh_header').off('mousedown');
 		$sf('#sofresh_header').off('mouseup');
 		$sf('#sofresh_links input:checkbox').off('change');
@@ -354,7 +354,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			}).on('mouseup', function(){
 				stopDragAndDrop();
 			});
-			$sf(document).on('keyup', function(event){
+			$sf(document).on('keyup.sofresh', function(event){
 				if (event.which == 27) stopDragAndDrop();
 			});
 		};
