@@ -318,7 +318,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 			var $this = this,
 				initX = false,
 				initY = false;
-			$sf(document).on('mousemove.sofresh', function(event){
+			function onDragAndDrop(event){
 				if ($this.container.hasClass('sofresh-movable')) {
 					event.preventDefault();
 					if (!initX) initX = event.pageX;
@@ -329,11 +329,8 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 					initY = event.pageY;
 					$sf('.sofresh-movable').css({ left: '+=' + thisX, top: '+=' + thisY });
 				}
-			});
-			$sf('#sofresh_header').on('mousedown', function(event){
-				event.preventDefault();
-				$this.container.addClass('sofresh-movable');
-			}).on('mouseup', function(){
+			}
+			function stopDragAndDrop(){
 				$this.container.removeClass('sofresh-movable');
 				initX = false;
 				initY = false;
@@ -343,6 +340,18 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 					left: position.left - $sf(document).scrollLeft()
 				};
 				$this.saveState();
+			}
+			$sf(document).on('mousemove.sofresh', function(event){
+				onDragAndDrop(event);
+			});
+			$sf('#sofresh_header').on('mousedown', function(event){
+				event.preventDefault();
+				$this.container.addClass('sofresh-movable');
+			}).on('mouseup', function(){
+				stopDragAndDrop();
+			});
+			$sf(document).on('keyup', function(event){
+				if (event.which == 27) stopDragAndDrop();
 			});
 		};
 
