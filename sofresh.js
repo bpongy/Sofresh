@@ -271,12 +271,14 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		};
 
 		this.reposition = function(){
-			if (this.position.left + this.container.width() > document.body.clientWidth) {
+			if (this.position.left + this.container.width() > document.body.clientWidth || this.position.left < 0) {
 				this.position.left = document.body.clientWidth - this.container.width() - 50;
+				this.position.left = this.position.left > 0 ? this.position.left : 0;
 				this.container.css('left', this.position.left);
 			}
-			if (this.position.top + this.container.height() > $sf(window).height()) {
+			if (this.position.top + this.container.height() > $sf(window).height() || this.position.top < 0) {
 				this.position.top = $sf(window).height() - this.container.height() - 50;
+				this.position.top = this.position.top > 0 ? this.position.top : 0;
 				this.container.css('top', this.position.top);
 			}
 		};
