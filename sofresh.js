@@ -275,6 +275,10 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 				this.position.left = document.body.clientWidth - this.container.width() - 50;
 				this.container.css('left', this.position.left);
 			}
+			if (this.position.top + this.container.height() > $sf(window).height()) {
+				this.position.top = $sf(window).height() - this.container.height() - 50;
+				this.container.css('top', this.position.top);
+			}
 		};
 
 		this.saveState = function(){
