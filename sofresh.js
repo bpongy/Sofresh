@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.8');
+define('SOFRESH_VERSION_WIDGET', '1.0.9');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -373,7 +373,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 				var elem = files[a], rel = elem.rel, filename = '', checked = '', li_class = '';
 				if (typeof rel != 'string' || rel.length == 0 || rel == 'stylesheet' || rel == 'stylesheet/less') {
 					var href = this.getHref(elem);
-					if (href != null && this.isLocalHref(href)) {
+					if (href != '' && href != null && this.isLocalHref(href)) {
 						this.links.push({
 							'elem' : elem,
 							'href' : href,
