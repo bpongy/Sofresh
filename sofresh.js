@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.9');
+define('SOFRESH_VERSION_WIDGET', '1.0.10');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -45,7 +45,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  *  - Copyright (c) 2012 Fred Heusschen
  *  - http://www.frebsite.nl/
  * 
- * Icon set:
+ * gentleface icon set:
  *  - The Creative Commons Attribution-NonCommercial
  *  - http://gentleface.com/
  * 
@@ -261,12 +261,12 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 		};
 
 		this.checkAll = function(){
-			$sf('#sofresh_links input:checkbox').attr('checked', 'checked').first().trigger('change');
+			$sf('#sofresh_links input:checkbox').prop('checked', true).first().trigger('change');
 			return false;
 		};
 
 		this.uncheckAll = function(){
-			$sf('#sofresh_links input:checkbox').removeAttr('checked').first().trigger('change');
+			$sf('#sofresh_links input:checkbox').prop('checked', false).first().trigger('change');
 			return false;
 		};
 

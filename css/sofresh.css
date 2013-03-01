@@ -65,10 +65,10 @@
 #sofresh #sofresh_header {
 	height: 35px;
 	background-color: #454545;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#454545), to(#292929)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #454545, #292929); /* Chrome 10+, Saf5.1+, iOS 5+ */
-	background-image:    -moz-linear-gradient(top, #454545, #292929); /* FF3.6+ */
-	background-image:      -o-linear-gradient(top, #454545, #292929); /* Opera 11.10+ */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#454545), to(#292929));
+	background-image: -webkit-linear-gradient(top, #454545, #292929);
+	background-image:    -moz-linear-gradient(top, #454545, #292929);
+	background-image:      -o-linear-gradient(top, #454545, #292929);
 	background-image:         linear-gradient(to bottom, #454545, #292929);
 	-webkit-box-shadow: inset 0 1px 0 #666;
 	   -moz-box-shadow: inset 0 1px 0 #666;
@@ -80,6 +80,7 @@
 	border: 1px solid #000;
 	cursor: move;
 }
+
 #sofresh #sofresh_header em {
 	display: inline;
 	color: #fff;
@@ -123,21 +124,6 @@
 	        transform: rotate(-180deg);
 }
 
-/*
-#sofresh #sofresh_check {
-	display: none;
-	float: left;
-	width: 6px;
-	height: 6px;
-	background-color: #7D9D7A;
-	margin: 15px 2px 15px 8px;
-	-webkit-box-shadow: 1px 1px 0 #222;
-	   -moz-box-shadow: 1px 1px 0 #222;
-	     -o-box-shadow: 1px 1px 0 #222;
-	        box-shadow: 1px 1px 0 #222;
-}
-*/
-
 #sofresh #sofresh_title {
 	float: left;
 	height: 35px;
@@ -180,7 +166,7 @@
 
 #sofresh #sofresh_content {
 	background: #fff;
-	max-height: 200px;
+	max-height: 216px;
 	overflow: auto;
 	border: 1px solid #eee;
 	border-top: 0;
