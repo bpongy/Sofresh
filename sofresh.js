@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.10');
+define('SOFRESH_VERSION_WIDGET', '1.1.0');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -151,8 +151,6 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 						link.elem.setAttribute('href', this.getRandom(this.getHref(link.elem)));
 						if (this.initialized) {
 							elem = $sf('#sofresh_links label[for="sofresh_link_' + $sf(link.elem).data('sofresh-link') + '"]').parents('li');
-							elem.addClass('sofresh-highlight');
-							setTimeout(function(){ elem.removeClass('sofresh-highlight'); }, 1100);
 							// LESS files: only refresh if watch mode is off
 							if (link.href.indexOf('.less') > -1 && typeof less == 'object' && !less.watchMode) less.refresh(true);
 						}
