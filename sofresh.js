@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.10');
+define('SOFRESH_VERSION_WIDGET', '1.0.11');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
