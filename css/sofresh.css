@@ -9,6 +9,7 @@
 	margin: 0;
 	padding: 0;
 	color: #333;
+	text-transform: none;
 	-webkit-user-select: none;
 	   -moz-user-select: none;
 	        user-select: none;
