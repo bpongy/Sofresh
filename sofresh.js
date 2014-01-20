@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.11');
+define('SOFRESH_VERSION_WIDGET', '1.0.12');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -407,7 +407,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 								'</li>';
 						i++;
 					} else {
-						if (console) console.warn("[SoFresh] A non-local CSS file will not be resfreshed: " + href);
+						if (console) console.warn("[SoFresh] A non-local CSS file will not be refreshed: " + href);
 					}
 				}
 			}
