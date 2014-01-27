@@ -331,3 +331,32 @@
 #sofresh #sofresh_footer a:hover {
 	color: #444;
 }
+
+/* RTL languages */
+
+html[dir="rtl"] #sofresh #sofresh_title {
+	float: right;
+}
+
+html[dir="rtl"] #sofresh #sofresh_close {
+	left: -17px;
+	right: auto;
+}
+
+html[dir="rtl"] #sofresh #sofresh_content_toggler {
+	float: left;
+	margin: 10px 0 0 6px;
+}
+
+html[dir="rtl"] #sofresh #sofresh_links li label {
+	float: right;
+	text-align: right;
+}
+
+html[dir="rtl"] #sofresh #sofresh_links li a {
+	float: left;
+}
+
+html[dir="rtl"] #sofresh #sofresh_links li a img {
+	-webkit-transform: scale(-1, 1);
+}
