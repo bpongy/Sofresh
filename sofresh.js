@@ -1,6 +1,6 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.13');
+define('SOFRESH_VERSION_WIDGET', '1.0.14');
 define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
 
 if (isset($_GET['nocache']))
@@ -50,7 +50,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
  *  - http://gentleface.com/
  * 
  * SoFresh:
- *  - Copyright (c) 2012 Benjamin Pongy & Nicolas Sorosac & Sylvain Gougouzian
+ *  - Copyright (c) 2012 - 2014 Benjamin Pongy & Nicolas Sorosac & Sylvain Gougouzian
  *  - http://www.redpik.net/
  * 
  * Dual licensed under the MIT and GPL licenses:
@@ -61,7 +61,7 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 
 	<?php include_once dirname(__FILE__).'/js/jquery.js'; ?>
 
-	// if we call the bookmarlet several times: clean everything!
+	// If we call the bookmarklet several times: clean everything!
 	if (typeof $sf == 'undefined') $sf = jQuery.noConflict(true);
 	if (typeof window.soFresh == 'function') window.soFreshDestroy();
 
@@ -436,9 +436,17 @@ require_once dirname(__FILE__).'/php/sofresh.php';
 				$this.reloadFile(checked_links);
 			}).trigger('change');
 			// Refresh on check
-			$sf('#sofresh_links label').on('click', function(){
-				$label = $sf(this);
+			$sf('#sofresh_links label').on('click', function(e){
+				e.preventDefault();
+				var $label = $sf(this);
+				var $input = $sf('input:checkbox', $label);
 				var i = $label.attr('for').replace(/sofresh_link_/i, '');
+				if ($input.prop('checked')) {
+					$input.prop('checked', false).removeAttr('checked');
+				} else {
+					$input.attr('checked', 'checked').prop('checked', true);
+				}
+				$input.trigger('change');
 				$this.links[i].force_refresh = true;
 			});
 			// UI events
