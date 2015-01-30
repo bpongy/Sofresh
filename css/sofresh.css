@@ -257,6 +257,11 @@
 	cursor: pointer;
 }
 
+#sofresh #sofresh_links li label .checker {
+	width: auto;
+	height: auto;
+}
+
 #sofresh #sofresh_links li.sofresh-inactive {
 	filter: alpha(opacity=50);
 	opacity: 0.5;
