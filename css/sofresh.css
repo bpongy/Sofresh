@@ -259,7 +259,9 @@
 	cursor: pointer;
 }
 
-#sofresh #sofresh_links li label .checker {
+#sofresh #sofresh_links li label .checker,
+#sofresh #sofresh_links li label .checker span,
+#sofresh #sofresh_links li label .checker input {
 	width: auto;
 	height: auto;
 }
