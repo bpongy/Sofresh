@@ -1,7 +1,7 @@
 <?php
 
-define('SOFRESH_VERSION_WIDGET', '1.0.14');
-define('SOFRESH_VERSION_BOOKMARKLET', '1.0.0');
+define('SOFRESH_VERSION_WIDGET', '1.1.0');
+define('SOFRESH_VERSION_BOOKMARKLET', '1.1.0');
 
 if (isset($_GET['nocache']))
 	define('SOFRESH_LAST_MODIFIED', gmdate('D, d M Y H:i:s', time()) . ' GMT');
